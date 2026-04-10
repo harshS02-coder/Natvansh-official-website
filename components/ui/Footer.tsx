@@ -19,17 +19,25 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row items-center justify-between gap-8">
           
           {/* LEFT: Branding */}
-          <div className="flex items-center">
-            <Link href="/" className="inline-block group">
-              <h2 className="text-6xl sm:text-7xl font-anton tracking-widest uppercase transition-transform group-hover:scale-105"
-                  style={{ 
-                    backgroundImage: "linear-gradient(to right, #FF007F, #FFFF00, #39FF14)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    textShadow: "0 0 20px rgba(255,0,127,0.4)"
-                  }}>
-                NATVANSH
-              </h2>
+          <div className="flex flex-col items-center md:items-start group">
+            <Link href="/" className="flex items-center gap-4 group">
+              <img 
+                src="/images/logo.png" 
+                alt="Natvansh Logo" 
+                className="w-16 h-16 md:w-20 md:h-20 object-contain group-hover:-rotate-12 group-hover:scale-110 transition-all duration-300 drop-shadow-[4px_4px_0px_#39FF14]" 
+              />
+              <div className="flex flex-col">
+                <h2 className="text-5xl sm:text-6xl font-anton tracking-widest uppercase transition-transform group-hover:scale-105"
+                    style={{ 
+                      backgroundImage: "linear-gradient(to right, #FF007F, #FFFF00, #39FF14)",
+                      WebkitBackgroundClip: "text",
+                      WebkitTextFillColor: "transparent",
+                      textShadow: "0 0 20px rgba(255,0,127,0.4)"
+                    }}>
+                  NATVANSH
+                </h2>
+                <h3 className="font-bebas text-xl text-[var(--neon-pink)] uppercase tracking-widest mt-[-5px]">Drama & Film Club</h3>
+              </div>
             </Link>
           </div>
 

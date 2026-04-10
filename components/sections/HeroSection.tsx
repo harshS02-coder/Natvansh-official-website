@@ -23,27 +23,27 @@ export default function HeroSection() {
         duration: 0.5,
         ease: "power3.out",
       })
-      .from(".hero-char", {
-        opacity: 0,
-        y: 40,
-        rotationZ: -5,
-        stagger: 0.05,
-        duration: 0.6,
-        ease: "back.out(1.5)",
-      }, "-=0.3")
-      .from(".hero-subtitle", {
-        opacity: 0,
-        scale: 0.9,
-        duration: 0.6,
-        ease: "power2.out",
-      }, "-=0.4")
-      .from(".hero-cta", {
-        opacity: 0,
-        y: 20,
-        duration: 0.4,
-        stagger: 0.1,
-        ease: "power2.out",
-      }, "-=0.3");
+        .from(".hero-char", {
+          opacity: 0,
+          y: 40,
+          rotationZ: -5,
+          stagger: 0.05,
+          duration: 0.6,
+          ease: "back.out(1.5)",
+        }, "-=0.3")
+        .from(".hero-subtitle", {
+          opacity: 0,
+          scale: 0.9,
+          duration: 0.6,
+          ease: "power2.out",
+        }, "-=0.4")
+        .from(".hero-cta", {
+          opacity: 0,
+          y: 20,
+          duration: 0.4,
+          stagger: 0.1,
+          ease: "power2.out",
+        }, "-=0.3");
 
     },
     { scope: container }
@@ -56,7 +56,7 @@ export default function HeroSection() {
     >
       {/* Main Content Wrapper */}
       <div className="hero-content-wrapper relative z-10 w-full max-w-7xl mx-auto px-4 flex flex-col items-center justify-center pt-24 pb-12">
-        
+
         {/* Sanskrit Floating Badge */}
         <div className="hero-badge flex items-center gap-2 px-6 py-2 border-4 border-black bg-[var(--neon-green)] mb-10 shadow-[6px_6px_0px_#000] rotate-[-2deg]">
           <Sparkles size={16} className="text-black" />
@@ -67,7 +67,7 @@ export default function HeroSection() {
         </div>
 
         {/* Masterpiece Title */}
-        <h1 
+        <h1
           ref={titleRef}
           className="text-[15vw] sm:text-[12vw] md:text-[10vw] lg:text-[160px] font-anton leading-none tracking-tight mb-2 text-[var(--neon-yellow)] text-center flex overflow-hidden text-stroke-black drop-shadow-[10px_10px_0px_#000]"
         >
@@ -77,7 +77,7 @@ export default function HeroSection() {
             </span>
           ))}
         </h1>
-        
+
         <h1 className="text-[8vw] sm:text-[6vw] lg:text-[80px] font-anton text-[var(--neon-pink)] uppercase tracking-wider mb-6 text-stroke-black drop-shadow-[6px_6px_0px_#000] rotate-[1deg]">
           Drama & Film Club
         </h1>

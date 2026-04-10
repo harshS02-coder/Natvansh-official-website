@@ -13,11 +13,13 @@ import { IconGithub, IconLinkedin } from "@/components/ui/SocialIcons";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const fallbackImage = "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&h=400&fit=crop";
+
 const developers = [
   {
     name: "Developer One",
     role: "Full-Stack Developer",
-    image: null,
+    image: fallbackImage,
     github: "https://github.com",
     linkedin: "https://linkedin.com",
     portfolio: "https://example.com",
@@ -25,7 +27,7 @@ const developers = [
   {
     name: "Developer Two",
     role: "Frontend Developer",
-    image: null,
+    image: fallbackImage,
     github: "https://github.com",
     linkedin: "https://linkedin.com",
     portfolio: null,
@@ -33,7 +35,7 @@ const developers = [
   {
     name: "Developer Three",
     role: "UI/UX Designer",
-    image: null,
+    image: fallbackImage,
     github: "https://github.com",
     linkedin: "https://linkedin.com",
     portfolio: "https://example.com",
@@ -41,35 +43,76 @@ const developers = [
 ];
 
 const techStack = [
-  { name: "Next.js", color: "#000" },
-  { name: "React", color: "#61DAFB" },
-  { name: "Three.js", color: "#000" },
-  { name: "GSAP", color: "#88CE02" },
-  { name: "MongoDB", color: "#47A248" },
-  { name: "Tailwind", color: "#06B6D4" },
-  { name: "Clerk", color: "#6C47FF" },
-  { name: "TypeScript", color: "#3178C6" },
+  { name: "Next.js", color: "var(--neon-pink)" },
+  { name: "React", color: "var(--neon-yellow)" },
+  { name: "Three.js", color: "var(--neon-green)" },
+  { name: "GSAP", color: "#FFF" },
+  { name: "MongoDB", color: "var(--neon-pink)" },
+  { name: "Tailwind", color: "var(--neon-yellow)" },
+  { name: "Clerk", color: "var(--neon-green)" },
+  { name: "TypeScript", color: "#FFF" },
 ];
 
-function getInitials(name: string) {
-  return name
-    .split(" ")
-    .map((n) => n[0])
-    .join("")
-    .toUpperCase()
-    .slice(0, 2);
-}
+const DevCard = ({ dev }: { dev: any }) => (
+  <div className="bg-[#050505] rounded-[1.5rem] overflow-hidden border-2 border-[var(--neon-purple)] group transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_30px_rgba(255,0,255,0.4)] flex flex-col h-full mx-auto w-full max-w-[340px]">
+    {/* Doodle Image Area */}
+    <div className="relative h-60 w-full bg-[url('/images/card_doodle_bg_alt.png')] bg-cover bg-center overflow-hidden flex items-end justify-center">
+      <div className="absolute inset-0 bg-black/40 mix-blend-multiply rounded-t-[1.5rem]"></div>
+      {/* Cutout style subject photo */}
+      <img 
+        src={dev.image} 
+        alt={dev.name} 
+        className="relative z-10 w-full h-[90%] object-cover object-top mask-image-bottom drop-shadow-[0_10px_10px_rgba(0,0,0,0.8)] filter contrast-125 saturate-150 grayscale hover:grayscale-0 transition-all duration-500"
+      />
+      {/* Code icon */}
+      <div
+        className="absolute top-4 right-4 w-12 h-12 rounded-full flex items-center justify-center bg-black border-2 border-[var(--neon-pink)] shadow-[2px_2px_0_#FFF] z-20 transform rotate-[10deg]"
+      >
+        <Code2 size={24} style={{ color: "var(--neon-pink)" }} />
+      </div>
+    </div>
+
+    {/* Text & Socials Area */}
+    <div className="p-6 flex flex-col flex-1 items-center justify-between text-center gap-6">
+      <div>
+        <h4 className="font-anton text-3xl text-white tracking-widest uppercase text-stroke-black drop-shadow-[2px_2px_0_#000]">
+          {dev.name}
+        </h4>
+        <p className="text-md font-bold font-inter text-[var(--neon-pink)] uppercase mt-2 border-t-2 border-dashed border-zinc-700 pt-2 inline-block">
+          {dev.role}
+        </p>
+      </div>
+
+      <div className="flex items-center gap-6 w-full justify-center mt-2">
+        {dev.github && (
+          <a href={dev.github} className="w-12 h-12 flex items-center justify-center border-2 border-white text-white hover:bg-[var(--neon-yellow)] hover:text-black hover:border-black shadow-[3px_3px_0_#FFF] hover:shadow-none hover:translate-y-1 hover:translate-x-1 transition-all">
+            <IconGithub size={24} />
+          </a>
+        )}
+        {dev.linkedin && (
+          <a href={dev.linkedin} className="w-12 h-12 flex items-center justify-center border-2 border-white text-white hover:bg-[var(--neon-green)] hover:text-black hover:border-black shadow-[3px_3px_0_#FFF] hover:shadow-none hover:translate-y-1 hover:translate-x-1 transition-all">
+            <IconLinkedin size={24} />
+          </a>
+        )}
+        {dev.portfolio && (
+          <a href={dev.portfolio} className="w-12 h-12 flex items-center justify-center border-2 border-white text-white hover:bg-[var(--neon-pink)] hover:text-black hover:border-black shadow-[3px_3px_0_#FFF] hover:shadow-none hover:translate-y-1 hover:translate-x-1 transition-all">
+            <Globe size={24} />
+          </a>
+        )}
+      </div>
+    </div>
+  </div>
+);
 
 export default function DevelopersPage() {
   const container = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
-      gsap.from(".dev-card", {
+      gsap.from(".dev-card-wrapper", {
         scrollTrigger: {
           trigger: ".dev-grid",
           start: "top 80%",
-          toggleActions: "play none none reverse",
         },
         opacity: 0,
         y: 60,
@@ -83,7 +126,6 @@ export default function DevelopersPage() {
         scrollTrigger: {
           trigger: ".tech-grid",
           start: "top 85%",
-          toggleActions: "play none none reverse",
         },
         opacity: 0,
         scale: 0,
@@ -99,106 +141,52 @@ export default function DevelopersPage() {
     <>
       <ScrollProgress />
       <Navbar />
-      <main ref={container} className="min-h-screen pt-28">
+      <main ref={container} className="min-h-screen pt-28 bg-black">
         {/* Header */}
-        <section className="section-padding doodle-bg pb-12">
-          <div className="max-w-6xl mx-auto">
-            <SectionHeading
-              accent="✦ Behind the Curtain"
-              title="The Developers"
-              subtitle="The tech wizards who built this digital stage for Natvansh."
-            />
+        <section className="section-padding bg-[url('/images/bg_grunge_purple.png')] bg-cover halftone-overlay pb-12 overflow-hidden relative border-b-8 border-white">
+          <div className="max-w-6xl mx-auto flex flex-col lg:flex-row items-center gap-12 relative z-10">
+            <div className="flex-1">
+              <SectionHeading
+                accent="✦ Behind the Curtain"
+                title="The Developers"
+                subtitle="The tech wizards who built this digital stage for Natvansh."
+              />
+            </div>
+            {/* The Team Doodle Graphic */}
+            <div className="flex-1 w-full max-w-md mx-auto hidden lg:block transform rotate-2 hover:rotate-0 transition-transform duration-500">
+              <div className="border-4 border-black p-2 bg-[var(--neon-pink)] shadow-[10px_10px_0_#000]">
+                <img src="/images/team_doodle.png" alt="Dev Team Doodle" className="w-full h-auto border-4 border-black filter contrast-125" />
+              </div>
+            </div>
           </div>
         </section>
 
         {/* Developer Cards */}
-        <section className="px-4 sm:px-6 lg:px-8 pb-16" style={{ background: "var(--bg-primary)" }}>
-          <div className="max-w-4xl mx-auto dev-grid grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {developers.map((dev, i) => (
-              <div
-                key={dev.name}
-                className="dev-card glass-strong rounded-2xl p-8 text-center card-hover group perspective-1000"
-              >
-                {/* Avatar */}
-                <div className="relative mx-auto w-28 h-28 mb-6">
-                  <div
-                    className="w-28 h-28 rounded-full flex items-center justify-center text-3xl font-bold text-white group-hover:scale-110 transition-transform duration-500"
-                    style={{ background: "var(--accent-gradient)" }}
-                  >
-                    {getInitials(dev.name)}
-                  </div>
-                  {/* Code icon */}
-                  <div
-                    className="absolute -bottom-1 -right-1 w-8 h-8 rounded-full flex items-center justify-center"
-                    style={{ background: "var(--bg-primary)", border: "2px solid var(--accent-purple)" }}
-                  >
-                    <Code2 size={14} style={{ color: "var(--accent-purple)" }} />
-                  </div>
-                </div>
-
-                <h3 className="text-xl font-bold" style={{ color: "var(--text-primary)" }}>
-                  {dev.name}
-                </h3>
-                <p className="text-sm mt-1 font-accent text-lg" style={{ color: "var(--accent-purple)" }}>
-                  {dev.role}
-                </p>
-
-                {/* Social Links */}
-                <div className="flex justify-center gap-3 mt-5">
-                  {dev.github && (
-                    <a
-                      href={dev.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:glow"
-                      style={{ background: "var(--bg-glass)", border: "1px solid var(--border-color)", color: "var(--text-secondary)" }}
-                    >
-                      <IconGithub size={18} />
-                    </a>
-                  )}
-                  {dev.linkedin && (
-                    <a
-                      href={dev.linkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:glow"
-                      style={{ background: "var(--bg-glass)", border: "1px solid var(--border-color)", color: "var(--text-secondary)" }}
-                    >
-                      <IconLinkedin size={18} />
-                    </a>
-                  )}
-                  {dev.portfolio && (
-                    <a
-                      href={dev.portfolio}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:glow"
-                      style={{ background: "var(--bg-glass)", border: "1px solid var(--border-color)", color: "var(--text-secondary)" }}
-                    >
-                      <Globe size={18} />
-                    </a>
-                  )}
-                </div>
+        <section className="px-4 sm:px-6 lg:px-8 py-20 bg-grunge-dark halftone-overlay border-b-8 border-black">
+          <div className="max-w-5xl mx-auto dev-grid grid sm:grid-cols-2 lg:grid-cols-3 gap-10 relative z-10">
+            {developers.map((dev) => (
+              <div key={dev.name} className="dev-card-wrapper">
+                <DevCard dev={dev} />
               </div>
             ))}
           </div>
         </section>
 
         {/* Tech Stack */}
-        <section className="px-4 sm:px-6 lg:px-8 py-16" style={{ background: "var(--bg-secondary)" }}>
-          <div className="max-w-4xl mx-auto text-center">
-            <h3 className="text-2xl font-bold mb-2" style={{ color: "var(--text-primary)" }}>
+        <section className="px-4 sm:px-6 lg:px-8 py-24 bg-[url('/images/bg_grunge_red.png')] bg-cover halftone-overlay relative">
+          <div className="max-w-4xl mx-auto text-center relative z-10 bg-black p-10 border-4 border-black shadow-[15px_15px_0_var(--neon-yellow)] transform -rotate-1">
+            <h3 className="text-5xl font-anton uppercase text-white mb-4 text-stroke-black drop-shadow-[3px_3px_0_#000]">
               Built With
             </h3>
-            <p className="text-sm mb-8" style={{ color: "var(--text-muted)" }}>
+            <p className="text-xl font-bold font-inter mb-10 text-[var(--neon-green)] uppercase">
               Technologies powering this experience
             </p>
-            <div className="tech-grid flex flex-wrap justify-center gap-3">
+            <div className="tech-grid flex flex-wrap justify-center gap-4">
               {techStack.map((tech) => (
                 <span
                   key={tech.name}
-                  className="tech-badge px-4 py-2 rounded-full text-sm font-medium glass-strong card-hover cursor-default"
-                  style={{ color: "var(--text-primary)" }}
+                  className="tech-badge px-6 py-3 border-2 border-black font-anton text-xl uppercase tracking-wider shadow-[4px_4px_0_#FFF] transition-all hover:translate-x-1 hover:translate-y-1 hover:shadow-none cursor-default"
+                  style={{ backgroundColor: tech.color, color: "black" }}
                 >
                   {tech.name}
                 </span>
@@ -206,15 +194,15 @@ export default function DevelopersPage() {
             </div>
 
             {/* Love message */}
-            <div className="mt-12 flex items-center justify-center gap-2">
-              <span className="text-sm" style={{ color: "var(--text-muted)" }}>
+            <div className="mt-16 pt-8 border-t-4 border-dashed border-zinc-800 flex items-center justify-center gap-4">
+              <span className="text-xl font-bold text-white uppercase">
                 Crafted with
               </span>
-              <Heart size={16} fill="var(--accent-pink)" style={{ color: "var(--accent-pink)" }} />
-              <span className="text-sm" style={{ color: "var(--text-muted)" }}>
+              <Heart size={32} fill="var(--neon-pink)" stroke="black" strokeWidth={2} />
+              <span className="text-xl font-bold text-white uppercase">
                 for
               </span>
-              <span className="font-bold text-gradient">नटवंश</span>
+              <span className="font-anton text-4xl bg-[var(--neon-yellow)] text-black px-4 py-1 border-2 border-black transform rotate-2">नटवंश</span>
             </div>
           </div>
         </section>

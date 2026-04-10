@@ -8,95 +8,122 @@ import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
 import ScrollProgress from "@/components/ui/ScrollProgress";
 import SectionHeading from "@/components/ui/SectionHeading";
-import { Mail } from "lucide-react";
-import { IconInstagram, IconLinkedin } from "@/components/ui/SocialIcons";
+import { IconInstagram, IconLinkedin, IconWhatsapp, IconX } from "@/components/ui/SocialIcons";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const fallbackImage = "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&h=400&fit=crop";
+
 const postBearers = [
-  { name: "Rahul Sharma", role: "President", image: null },
-  { name: "Priya Singh", role: "Vice President", image: null },
-  { name: "Arjun Patel", role: "General Secretary", image: null },
-  { name: "Sneha Gupta", role: "Cultural Secretary", image: null },
+  { 
+    name: "Rahul Sharma", 
+    role: "President", 
+    image: fallbackImage,
+    phone: "+91 98765 43210"
+  },
+  { 
+    name: "Priya Singh", 
+    role: "Vice President", 
+    image: fallbackImage,
+    phone: "+91 87654 32109"
+  },
+  { 
+    name: "Arjun Patel", 
+    role: "General Secretary", 
+    image: fallbackImage,
+    phone: "+91 76543 21098"
+  },
+  { 
+    name: "Sneha Gupta", 
+    role: "Cultural Secretary", 
+    image: fallbackImage,
+    phone: "+91 65432 10987"
+  },
 ];
 
 const teamCategories = [
   {
     name: "CREATIVE TEAM",
     members: [
-      { name: "Ananya Roy", role: "Head of Direction", image: null },
-      { name: "Vikram Das", role: "Head of Scripting", image: null },
-      { name: "Meera Yadav", role: "Head of Acting", image: null },
-      { name: "Karan Joshi", role: "Choreographer", image: null },
+      { name: "Ananya Roy", role: "Head of Direction", image: fallbackImage, phone: "+91 99999 00000" },
+      { name: "Vikram Das", role: "Head of Scripting", image: fallbackImage, phone: "+91 88888 11111" },
+      { name: "Meera Yadav", role: "Head of Acting", image: fallbackImage, phone: "+91 77777 22222" },
+      { name: "Karan Joshi", role: "Choreographer", image: fallbackImage, phone: "+91 66666 33333" },
     ],
   },
   {
     name: "TECHNICAL TEAM",
     members: [
-      { name: "Amit Kumar", role: "Head of Cinematography", image: null },
-      { name: "Riya Verma", role: "Head of Editing", image: null },
-      { name: "Saurav Mishra", role: "Sound Design", image: null },
-      { name: "Nisha Agarwal", role: "Lighting Design", image: null },
-    ],
-  },
-  {
-    name: "MANAGEMENT TEAM",
-    members: [
-      { name: "Deepak Singh", role: "Event Manager", image: null },
-      { name: "Pooja Kumari", role: "PR & Outreach", image: null },
-      { name: "Rohit Sinha", role: "Sponsorship Lead", image: null },
-      { name: "Kavya Sharma", role: "Social Media", image: null },
+      { name: "Amit Kumar", role: "Head of Cinematography", image: fallbackImage, phone: "+91 55555 44444" },
+      { name: "Riya Verma", role: "Head of Editing", image: fallbackImage, phone: "+91 44444 55555" },
+      { name: "Saurav Mishra", role: "Sound Design", image: fallbackImage, phone: "+91 33333 66666" },
+      { name: "Nisha Agarwal", role: "Lighting Design", image: fallbackImage, phone: "+91 22222 77777" },
     ],
   },
 ];
 
-function getInitials(name: string) {
-  return name
-    .split(" ")
-    .map((n) => n[0])
-    .join("")
-    .toUpperCase()
-    .slice(0, 2);
-}
+// Helper to wrap the reusable card layout
+const TeamCard = ({ person }: { person: any }) => (
+  <div className="bg-[#050505] rounded-[1.5rem] overflow-hidden border border-zinc-900 group transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_20px_rgba(255,100,50,0.3)] flex flex-col h-full mx-auto w-full max-w-[320px]">
+    {/* Doodle Image Area */}
+    <div className="relative h-60 w-full bg-[url('/images/card_doodle_bg.png')] bg-cover bg-center overflow-hidden flex items-end justify-center">
+      <div className="absolute inset-0 bg-black/10 mix-blend-multiply rounded-t-[1.5rem]"></div>
+      {/* Cutout style subject photo */}
+      <img 
+        src={person.image} 
+        alt={person.name} 
+        className="relative z-10 w-full h-[90%] object-cover object-top mask-image-bottom drop-shadow-[0_10px_10px_rgba(0,0,0,0.8)] filter contrast-125"
+      />
+    </div>
 
-const colors = ["var(--neon-pink)", "var(--neon-yellow)", "var(--neon-green)", "var(--neon-orange)"];
+    {/* Text & Socials Area */}
+    <div className="p-6 flex flex-col flex-1 items-start justify-between text-left gap-8">
+      <div>
+        <h4 className="font-inter font-bold text-2xl text-white tracking-tight leading-tight">
+          {person.name}
+        </h4>
+        <p className="text-sm font-medium text-zinc-400 mt-1">
+          {person.role}
+        </p>
+        
+        <p className="text-sm text-zinc-300 font-medium tracking-wider mt-6">
+          {person.phone}
+        </p>
+      </div>
+
+      <div className="flex items-center gap-6 w-full justify-start mt-2">
+        <a href="#" className="text-zinc-300 hover:text-white transition-colors">
+          <IconWhatsapp size={22} />
+        </a>
+        <a href="#" className="text-zinc-300 hover:text-white transition-colors">
+          <IconLinkedin size={20} />
+        </a>
+        <a href="#" className="text-zinc-300 hover:text-white transition-colors">
+          <IconInstagram size={22} />
+        </a>
+        <a href="#" className="text-zinc-300 hover:text-white transition-colors">
+          <IconX size={20} />
+        </a>
+      </div>
+    </div>
+  </div>
+);
 
 export default function TeamPage() {
   const container = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
-      // Animate post bearers
-      gsap.from(".bearer-card", {
+      gsap.from(".member-card-wrapper", {
         scrollTrigger: {
-          trigger: ".bearers-section",
-          start: "top 80%",
-          toggleActions: "play none none reverse",
+          trigger: container.current,
+          start: "top 85%",
         },
         opacity: 0,
-        y: 60,
-        rotationZ: () => Math.random() * 8 - 4,
-        scale: 0.9,
-        duration: 0.6,
+        y: 40,
+        duration: 0.8,
         stagger: 0.1,
-        ease: "back.out(1.5)",
-      });
-
-      // Animate team sections
-      document.querySelectorAll(".team-section").forEach((section) => {
-        gsap.from(section.querySelectorAll(".team-card"), {
-          scrollTrigger: {
-            trigger: section,
-            start: "top 85%",
-            toggleActions: "play none none reverse",
-          },
-          opacity: 0,
-          y: 40,
-          rotationZ: () => Math.random() * 8 - 4,
-          duration: 0.5,
-          stagger: 0.08,
-          ease: "power3.out",
-        });
+        ease: "power3.out",
       });
     },
     { scope: container }
@@ -109,53 +136,26 @@ export default function TeamPage() {
       <main ref={container} className="min-h-screen pt-28 bg-black">
         {/* Header */}
         <section className="section-padding bg-grunge-dark halftone-overlay pb-12 relative border-b-8 border-white">
-          <div className="max-w-6xl mx-auto relative z-10">
-            <SectionHeading
-              accent="THE ENSEMBLE"
-              title="OUR TEAM"
-              subtitle="The incredible people who make the magic happen — on stage, behind the camera, and beyond."
-            />
+          <div className="max-w-6xl mx-auto relative z-10 text-center">
+            <h1 className="text-6xl md:text-8xl font-anton uppercase text-[var(--neon-yellow)] tracking-wide drop-shadow-[5px_5px_0_#FFF] mb-6 inline-block transform -rotate-2">
+              THE SQUAD
+            </h1>
+            <p className="text-xl md:text-2xl text-white font-bold font-inter max-w-2xl mx-auto bg-black p-4 border-2 border-white shadow-[4px_4px_0_var(--neon-pink)] rotate-1">
+              For years, Natvansh has built a legacy of discovering and celebrating raw talent. At the heart of this journey are the people holding it together.
+            </p>
           </div>
         </section>
 
         {/* Post Bearers */}
-        <section className="px-4 sm:px-6 lg:px-8 py-16 bearers-section bg-grunge-red halftone-overlay relative border-b-8 border-black">
+        <section className="px-4 sm:px-6 lg:px-8 py-20 bg-[url('/images/bg_grunge_red.png')] bg-cover halftone-overlay relative">
           <div className="max-w-6xl mx-auto relative z-10">
-            <h3 className="text-3xl font-anton text-center mb-12 text-black bg-[var(--neon-yellow)] inline-block px-4 py-2 border-4 border-black shadow-[6px_6px_0px_#000] rotate-[-2deg] mx-auto block w-max">
+            <h3 className="text-4xl md:text-5xl border-b-4 border-black pb-2 font-anton text-left mb-12 text-black uppercase">
               POST BEARERS
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-              {postBearers.map((person, i) => (
-                <div
-                  key={person.name}
-                  className="bearer-card bg-black border-4 border-black p-6 text-center group transition-all duration-300 hover:scale-105 hover:rotate-0"
-                  style={{ boxShadow: `8px 8px 0px ${colors[i % colors.length]}`, transform: `rotate(${i % 2 === 0 ? '-2deg' : '2deg'})` }}
-                >
-                  {/* Avatar */}
-                  <div
-                    className="w-28 h-28 mx-auto flex items-center justify-center text-4xl font-anton text-black mb-6 border-4 border-black shadow-[4px_4px_0_#FFF]"
-                    style={{ background: colors[i % colors.length] }}
-                  >
-                    {getInitials(person.name)}
-                  </div>
-                  <h4 className="font-anton text-2xl text-white tracking-widest uppercase mb-1">
-                    {person.name}
-                  </h4>
-                  <p className="text-lg font-bold font-inter" style={{ color: colors[i % colors.length] }}>
-                    {person.role}
-                  </p>
-                  {/* Social Icons */}
-                  <div className="flex justify-center gap-3 mt-6">
-                    <a href="#" className="w-10 h-10 border-2 border-white flex items-center justify-center text-white hover:bg-[var(--neon-pink)] hover:border-black hover:text-black transition-colors shadow-[2px_2px_0_#FFF]">
-                      <IconInstagram size={18} />
-                    </a>
-                    <a href="#" className="w-10 h-10 border-2 border-white flex items-center justify-center text-white hover:bg-[var(--neon-yellow)] hover:border-black hover:text-black transition-colors shadow-[2px_2px_0_#FFF]">
-                      <IconLinkedin size={18} />
-                    </a>
-                    <a href="#" className="w-10 h-10 border-2 border-white flex items-center justify-center text-white hover:bg-[var(--neon-green)] hover:border-black hover:text-black transition-colors shadow-[2px_2px_0_#FFF]">
-                      <Mail size={18} />
-                    </a>
-                  </div>
+              {postBearers.map((person) => (
+                <div key={person.name} className="member-card-wrapper">
+                  <TeamCard person={person} />
                 </div>
               ))}
             </div>
@@ -166,38 +166,18 @@ export default function TeamPage() {
         {teamCategories.map((category, catIndex) => (
           <section
             key={category.name}
-            className={`team-section px-4 sm:px-6 lg:px-8 py-20 relative border-b-4 border-black ${
-              catIndex % 2 === 0 ? "bg-grunge-purple" : "bg-grunge-dark"
-            } halftone-overlay`}
+            className={`px-4 sm:px-6 lg:px-8 py-20 relative ${
+              catIndex % 2 === 0 ? "bg-[url('/images/bg_grunge_purple.png')]" : "bg-[url('/images/bg_dark_texture.png')]"
+            } bg-cover halftone-overlay border-t-8 border-black`}
           >
             <div className="max-w-6xl mx-auto relative z-10">
-              <h3
-                className="text-4xl font-anton mb-12 text-center text-white text-stroke-black drop-shadow-[4px_4px_0_#000]"
-              >
+              <h3 className="text-4xl md:text-5xl font-anton mb-12 text-left text-white border-b-4 border-[var(--neon-pink)] pb-2 inline-block">
                 {category.name}
               </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                {category.members.map((member, i) => (
-                  <div
-                    key={member.name}
-                    className="team-card bg-black border-4 border-black p-5 text-center group cursor-pointer transition-all duration-300 hover:scale-105 hover:rotate-0"
-                    style={{
-                      boxShadow: "6px 6px 0px #FFF",
-                      transform: `rotate(${i % 2 === 0 ? '1deg' : '-1deg'})`
-                    }}
-                  >
-                    <div
-                      className="w-20 h-20 mx-auto flex items-center justify-center text-2xl font-anton text-black mb-4 border-2 border-black shadow-[3px_3px_0_#FFF]"
-                      style={{ background: colors[(catIndex + i) % colors.length] }}
-                    >
-                      {getInitials(member.name)}
-                    </div>
-                    <h4 className="font-anton tracking-wider text-xl text-white uppercase mt-2">
-                      {member.name}
-                    </h4>
-                    <p className="text-sm font-bold font-inter text-gray-400 mt-2 uppercase border-t-2 border-zinc-800 pt-2">
-                      {member.role}
-                    </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                {category.members.map((member) => (
+                  <div key={member.name} className="member-card-wrapper">
+                    <TeamCard person={{...member, image: member.image}} />
                   </div>
                 ))}
               </div>

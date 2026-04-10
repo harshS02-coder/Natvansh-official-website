@@ -39,24 +39,29 @@ export default function Navbar() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
-            <h1 className="text-3xl font-anton text-white tracking-widest uppercase transition-transform group-hover:-translate-y-1">
-              <span className="text-[var(--neon-pink)]">NAT</span>VANSH
+          <Link href="/" className="flex items-center gap-3 group">
+            <img 
+              src="/images/logo.png" 
+              alt="Natvansh Logo" 
+              className="w-12 h-12 md:w-14 md:h-14 object-contain group-hover:rotate-[15deg] group-hover:scale-110 transition-all duration-300 drop-shadow-[2px_2px_0px_#FF007F]" 
+            />
+            <h1 className="text-3xl md:text-4xl font-anton text-white tracking-widest uppercase transition-transform group-hover:-rotate-2 group-hover:text-[var(--neon-yellow)] drop-shadow-[2px_2px_0px_#000]">
+              <span className="text-[var(--neon-pink)] group-hover:text-white transition-colors duration-300">NAT</span>VANSH
             </h1>
           </Link>
 
           {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-6">
+          <div className="hidden md:flex items-center gap-4">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`px-6 py-2 rounded-full font-anton text-lg transition-transform ${
+                  className={`px-5 py-2 font-anton text-lg uppercase tracking-wide transition-all duration-300 transform hover:-translate-y-1 hover:rotate-2 ${
                     isActive
-                      ? "bg-[var(--neon-yellow)] text-black border-2 border-black"
-                      : "text-white hover:text-[var(--neon-green)]"
+                      ? "bg-[var(--neon-yellow)] text-black border-2 border-black shadow-[4px_4px_0_#FFF]"
+                      : "text-white bg-black border-2 border-transparent hover:border-[var(--neon-green)] hover:text-[var(--neon-green)] hover:shadow-[4px_4px_0_var(--neon-green)]"
                   }`}
                 >
                   {link.label}

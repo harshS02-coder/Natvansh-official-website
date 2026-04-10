@@ -86,7 +86,6 @@ export default function EventsPage() {
         scrollTrigger: {
           trigger: ".events-grid",
           start: "top 85%",
-          toggleActions: "play none none reverse",
         },
         opacity: 0,
         y: 50,
@@ -103,103 +102,95 @@ export default function EventsPage() {
     <>
       <ScrollProgress />
       <Navbar />
-      <main ref={container} className="min-h-screen pt-28">
+      <main ref={container} className="min-h-screen pt-28 bg-black">
         {/* Hero Banner */}
-        <section className="section-padding doodle-bg pb-12">
-          <div className="max-w-6xl mx-auto">
-            <SectionHeading
-              accent="✦ The Stage Awaits"
-              title="Our Events"
-              subtitle="From the raw energy of nukkad natak to the magic of cinema, explore everything Natvansh has to offer."
-            />
-
-            {/* Category Filters */}
-            <div className="flex flex-wrap justify-center gap-2 mt-8">
-              {categories.map((cat, i) => (
-                <button
-                  key={cat}
-                  className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                    i === 0
-                      ? "text-white"
-                      : ""
-                  }`}
-                  style={
-                    i === 0
-                      ? { background: "var(--accent-gradient)" }
-                      : {
-                          background: "var(--bg-glass)",
-                          border: "1px solid var(--border-color)",
-                          color: "var(--text-secondary)",
-                        }
-                  }
-                >
-                  {cat}
-                </button>
-              ))}
+        <section className="section-padding bg-[url('/images/bg_grunge_red.png')] bg-cover halftone-overlay pb-12 border-b-8 border-white">
+          <div className="max-w-6xl mx-auto relative z-10 flex flex-col md:flex-row items-center gap-12">
+            <div className="flex-1">
+              <SectionHeading
+                accent="✦ The Stage Awaits"
+                title="Our Events"
+                subtitle="From the raw energy of nukkad natak to the magic of cinema, explore everything Natvansh has to offer."
+              />
             </div>
+            <div className="flex-1 w-full max-w-md mx-auto hidden md:block transform -rotate-2 hover:rotate-2 transition-transform duration-500">
+              <div className="border-4 border-black p-2 bg-[var(--neon-green)] shadow-[10px_10px_0_#000]">
+                <img src="/images/hero_drama_doodle.png" alt="Drama Events" className="w-full h-auto border-4 border-black" />
+              </div>
+            </div>
+          </div>
+
+          {/* Category Filters */}
+          <div className="flex flex-wrap justify-center gap-4 mt-12 relative z-10">
+            {categories.map((cat, i) => (
+              <button
+                key={cat}
+                className={`px-8 py-3 font-anton uppercase text-xl transition-all duration-300 border-2 border-black transform hover:-translate-y-1 hover:shadow-[4px_4px_0_#000] focus:outline-none ${
+                  i === 0
+                    ? "bg-[var(--neon-yellow)] text-black shadow-[4px_4px_0_#000]"
+                    : "bg-black text-white hover:bg-[var(--neon-pink)] hover:text-black"
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
           </div>
         </section>
 
         {/* Events Grid */}
-        <section className="px-4 sm:px-6 lg:px-8 pb-20" style={{ background: "var(--bg-primary)" }}>
-          <div className="max-w-6xl mx-auto events-grid grid sm:grid-cols-2 lg:grid-cols-3 gap-6 -mt-4">
+        <section className="px-4 sm:px-6 lg:px-8 py-20 bg-grunge-dark halftone-overlay relative">
+          <div className="max-w-6xl mx-auto events-grid grid sm:grid-cols-2 lg:grid-cols-3 gap-10 relative z-10">
             {placeholderEvents.map((event) => (
               <div
                 key={event.id}
-                className="event-card glass-strong rounded-2xl overflow-hidden card-hover group cursor-pointer"
+                className="event-card bg-[#0a0a0a] border-4 border-black p-4 flex flex-col group cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-[10px_10px_0_var(--neon-pink)]"
               >
                 {/* Image */}
-                <div className="relative aspect-[16/10] overflow-hidden">
+                <div className="relative aspect-[16/10] overflow-hidden border-2 border-zinc-800">
                   <img
                     src={event.image}
                     alt={event.title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
-                  <div
-                    className="absolute inset-0"
-                    style={{
-                      background: "linear-gradient(180deg, transparent 40%, rgba(13,13,26,0.7) 100%)",
-                    }}
+                    className="w-full h-full object-cover filter grayscale hover:grayscale-0 transition-all duration-500"
                   />
                   {event.featured && (
                     <span
-                      className="absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-bold text-white"
-                      style={{ background: "var(--accent-gradient)" }}
+                      className="absolute top-3 right-3 px-4 py-1 text-sm font-anton uppercase text-black bg-[var(--neon-yellow)] border-2 border-black shadow-[2px_2px_0_#000]"
                     >
                       ★ Featured
                     </span>
                   )}
                   <span
-                    className="absolute bottom-3 left-3 px-3 py-1 rounded-full text-xs font-medium text-white glass"
+                    className="absolute bottom-3 left-3 px-4 py-1 text-xs font-bold uppercase text-white bg-[var(--neon-purple)] tracking-wider border-2 border-transparent group-hover:border-white transition-all transform -rotate-2"
                   >
                     {event.category}
                   </span>
                 </div>
 
                 {/* Content */}
-                <div className="p-5 space-y-3">
-                  <h3
-                    className="text-lg font-bold group-hover:text-gradient transition-all line-clamp-2"
-                    style={{ color: "var(--text-primary)" }}
-                  >
-                    {event.title}
-                  </h3>
-                  <p
-                    className="text-sm line-clamp-2"
-                    style={{ color: "var(--text-secondary)" }}
-                  >
-                    {event.description}
-                  </p>
-                  <div className="flex items-center gap-4 pt-2">
-                    <div className="flex items-center gap-1.5">
-                      <Calendar size={14} style={{ color: "var(--accent-purple)" }} />
-                      <span className="text-xs" style={{ color: "var(--text-muted)" }}>
+                <div className="p-4 space-y-4 flex-1 flex flex-col justify-between">
+                  <div>
+                    <h3 className="text-2xl font-anton text-white uppercase tracking-wider group-hover:text-[var(--neon-yellow)] transition-colors mt-2 mb-2 leading-tight">
+                      {event.title}
+                    </h3>
+                    <p className="text-sm font-inter text-zinc-400 line-clamp-3">
+                      {event.description}
+                    </p>
+                  </div>
+                  
+                  <div className="pt-4 border-t-2 border-dashed border-zinc-800 space-y-3">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 bg-[var(--neon-pink)] flex items-center justify-center border-2 border-black shadow-[2px_2px_0_#000]">
+                        <Calendar size={16} className="text-black" />
+                      </div>
+                      <span className="text-sm font-bold text-zinc-300">
                         {event.date}
                       </span>
                     </div>
-                    <div className="flex items-center gap-1.5">
-                      <MapPin size={14} style={{ color: "var(--accent-pink)" }} />
-                      <span className="text-xs" style={{ color: "var(--text-muted)" }}>
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 bg-[var(--neon-green)] flex items-center justify-center border-2 border-black shadow-[2px_2px_0_#000]">
+                        <MapPin size={16} className="text-black" />
+                      </div>
+                      <span className="text-sm font-bold text-zinc-300">
                         {event.venue.split(",")[0]}
                       </span>
                     </div>
