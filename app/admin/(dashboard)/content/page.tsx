@@ -8,6 +8,7 @@ interface ContentSection {
   title: string;
   content: string;
   image: string;
+  images?: string[];
   metadata: Record<string, string>;
 }
 
@@ -24,6 +25,12 @@ const defaultContent: ContentSection[] = [
     title: "Where Stories Come Alive",
     content: "Founded at the National Institute of Technology, Patna, Natvansh is the heartbeat of dramatic arts on campus.",
     image: "",
+    images: [
+      "https://images.unsplash.com/photo-1503095396549-807759245b35?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1594909122845-11baa439b7bf?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1507924538820-ede94a04019d?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1460723237483-7a6dc9d0b212?w=800&h=600&fit=crop"
+    ],
     metadata: {},
   },
   {
@@ -39,6 +46,7 @@ export default function AdminContentPage() {
   const [sections, setSections] = useState<ContentSection[]>(defaultContent);
   const [saving, setSaving] = useState<string | null>(null);
   const [saved, setSaved] = useState<string | null>(null);
+  const [newImageUrls, setNewImageUrls] = useState<Record<string, string>>({});
 
   useEffect(() => { fetchContent(); }, []);
 
@@ -72,6 +80,18 @@ export default function AdminContentPage() {
 
   function updateSection(sectionName: string, updates: Partial<ContentSection>) {
     setSections(sections.map((s) => (s.section === sectionName ? { ...s, ...updates } : s)));
+  }
+
+  function addImageUrl(sectionName: string) {
+    const url = newImageUrls[sectionName];
+    if (url && url.trim()) {
+      setSections(sections.map(s => s.section === sectionName ? { ...s, images: [...(s.images || []), url.trim()] } : s));
+      setNewImageUrls({ ...newImageUrls, [sectionName]: "" });
+    }
+  }
+
+  function removeImage(sectionName: string, index: number) {
+    setSections(sections.map(s => s.section === sectionName ? { ...s, images: (s.images || []).filter((_, i) => i !== index) } : s));
   }
 
   function updateMetadata(sectionName: string, key: string, value: string) {
@@ -132,6 +152,24 @@ export default function AdminContentPage() {
               <label className="block text-xs font-inter font-bold mb-1 text-zinc-500 uppercase">Image URL</label>
               <input className="w-full bg-black border-2 border-zinc-700 text-white px-3 py-2 font-inter focus:border-[var(--neon-yellow)] outline-none" value={section.image} onChange={(e) => updateSection(section.section, { image: e.target.value })} placeholder="Optional image URL" />
             </div>
+
+            {section.section === "intro" && (
+              <div>
+                <label className="block text-xs font-inter font-bold mb-2 text-zinc-500 uppercase">Carousel Images</label>
+                <div className="flex gap-2 mb-3">
+                  <input className="flex-1 bg-black border-2 border-zinc-700 text-white px-3 py-2 font-inter focus:border-[var(--neon-yellow)] outline-none" value={newImageUrls[section.section] || ""} onChange={(e) => setNewImageUrls({ ...newImageUrls, [section.section]: e.target.value })} placeholder="Paste image URL and click Add" onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addImageUrl(section.section))} />
+                  <button className="px-4 py-2 font-anton text-sm uppercase bg-[var(--neon-green)] text-black border-2 border-black shadow-[2px_2px_0_#000] hover:-translate-y-0.5 transition-transform" onClick={() => addImageUrl(section.section)}>Add</button>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {(section.images || []).map((img, i) => (
+                    <div key={i} className="relative w-20 h-20 border-2 border-zinc-700 overflow-hidden">
+                      <img src={img} alt="" className="w-full h-full object-cover" />
+                      <button className="absolute top-1 right-1 w-5 h-5 bg-red-500 text-white flex items-center justify-center text-xs font-bold" onClick={() => removeImage(section.section, i)}>×</button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Metadata Fields */}
             {Object.keys(section.metadata).length > 0 && (

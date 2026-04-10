@@ -5,6 +5,7 @@ export interface ISiteContent extends Document {
   title: string;
   content: string;
   image: string;
+  images?: string[];
   metadata: Record<string, string>;
   updatedAt: Date;
 }
@@ -20,6 +21,7 @@ const SiteContentSchema = new Schema<ISiteContent>(
     title: { type: String, default: "" },
     content: { type: String, default: "" },
     image: { type: String, default: "" },
+    images: [{ type: String }],
     metadata: { type: Schema.Types.Mixed, default: {} },
   },
   { timestamps: true }

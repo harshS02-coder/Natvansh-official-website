@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -23,6 +23,19 @@ const carouselImages = [
 
 export default function ClubIntroSection() {
   const container = useRef<HTMLDivElement>(null);
+  const [images, setImages] = useState<string[]>(carouselImages);
+
+  useEffect(() => {
+    fetch("/api/content")
+      .then((res) => res.json())
+      .then((data) => {
+        const intro = data.find((d: any) => d.section === "intro");
+        if (intro && intro.images && intro.images.length > 0) {
+          setImages(intro.images);
+        }
+      })
+      .catch((err) => console.error(err));
+  }, []);
 
   useGSAP(
     () => {
@@ -100,7 +113,7 @@ export default function ClubIntroSection() {
                 navigation={{ nextEl: ".intro-next", prevEl: ".intro-prev" }}
                 className="w-full h-auto aspect-[4/3]"
                 >
-                {carouselImages.map((src, i) => (
+                {images.map((src, i) => (
                     <SwiperSlide key={i} className="bg-black border-r-4 border-b-4 border-black">
                     <img
                         src={src}
