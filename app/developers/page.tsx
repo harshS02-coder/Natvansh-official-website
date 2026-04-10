@@ -20,6 +20,7 @@ interface DevItem {
   name: string;
   role: string;
   image: string;
+  imageTransform?: { x: number; y: number; scale: number };
   github: string;
   linkedin: string;
   portfolio: string;
@@ -43,19 +44,25 @@ const techStack = [
   { name: "TypeScript", color: "#FFF" },
 ];
 
-const DevCard = ({ dev }: { dev: DevItem }) => (
-  <div className="bg-[#050505] rounded-[1.5rem] overflow-hidden border-2 border-[var(--neon-purple)] group transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_30px_rgba(255,0,255,0.4)] flex flex-col h-full mx-auto w-full max-w-[340px]">
-    <div className="relative h-60 w-full bg-[url('/images/card_doodle_bg_alt.png')] bg-cover bg-center overflow-hidden flex items-end justify-center">
-      <div className="absolute inset-0 bg-black/40 mix-blend-multiply rounded-t-[1.5rem]"></div>
-      <img 
-        src={dev.image || fallbackImage} 
-        alt={dev.name} 
-        className="relative z-10 w-full h-[90%] object-cover object-top mask-image-bottom drop-shadow-[0_10px_10px_rgba(0,0,0,0.8)] filter contrast-125 saturate-150 grayscale hover:grayscale-0 transition-all duration-500"
-      />
-      <div className="absolute top-4 right-4 w-12 h-12 rounded-full flex items-center justify-center bg-black border-2 border-[var(--neon-pink)] shadow-[2px_2px_0_#FFF] z-20 transform rotate-[10deg]">
-        <Code2 size={24} style={{ color: "var(--neon-pink)" }} />
+const DevCard = ({ dev }: { dev: DevItem }) => {
+  const transformStyle = dev.imageTransform
+    ? `translate(${dev.imageTransform.x}px, ${dev.imageTransform.y}px) scale(${dev.imageTransform.scale})`
+    : 'none';
+
+  return (
+    <div className="bg-[#050505] rounded-[1.5rem] overflow-hidden border-2 border-[var(--neon-purple)] group transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_0_30px_rgba(255,0,255,0.4)] flex flex-col h-full mx-auto w-full max-w-[340px]">
+      <div className="relative h-60 w-full bg-[url('/images/card_doodle_bg_alt.png')] bg-cover bg-center overflow-hidden flex items-end justify-center">
+        <div className="absolute inset-0 bg-black/40 mix-blend-multiply rounded-t-[1.5rem]"></div>
+        <img 
+          src={dev.image || fallbackImage} 
+          alt={dev.name} 
+          className="relative z-10 w-full h-[90%] object-cover object-top mask-image-bottom drop-shadow-[0_0_12px_rgba(255,255,255,0.8)] filter contrast-125 saturate-150 grayscale hover:grayscale-0 transition-all duration-500 ease-in-out cursor-pointer"
+          style={{ transform: transformStyle }}
+        />
+        <div className="absolute top-4 right-4 w-12 h-12 rounded-full flex items-center justify-center bg-black border-2 border-[var(--neon-pink)] shadow-[2px_2px_0_#FFF] z-20 transform rotate-[10deg]">
+          <Code2 size={24} style={{ color: "var(--neon-pink)" }} />
+        </div>
       </div>
-    </div>
     <div className="p-6 flex flex-col flex-1 items-center justify-between text-center gap-6">
       <div>
         <h4 className="font-anton text-3xl text-white tracking-widest uppercase text-stroke-black drop-shadow-[2px_2px_0_#000]">
@@ -83,8 +90,9 @@ const DevCard = ({ dev }: { dev: DevItem }) => (
         )}
       </div>
     </div>
-  </div>
-);
+    </div>
+  );
+};
 
 export default function DevelopersPage() {
   const container = useRef<HTMLDivElement>(null);

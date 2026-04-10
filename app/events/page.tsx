@@ -172,8 +172,8 @@ export default function EventsPage() {
                     >
                       {event.images.map((img, i) => (
                         <SwiperSlide key={i}>
-                          <div className="relative aspect-[16/10] overflow-hidden border-2 border-black filter grayscale hover:grayscale-0 transition-all duration-500">
-                            <img src={img} alt={`${event.title} photo ${i + 1}`} className="w-full h-full object-cover" />
+                          <div className="relative aspect-[16/10] overflow-hidden border-2 border-black bg-zinc-950 filter grayscale hover:grayscale-0 transition-all duration-500 flex items-center justify-center">
+                            <img src={img} alt={`${event.title} photo ${i + 1}`} className="w-full h-full object-contain" />
                           </div>
                         </SwiperSlide>
                       ))}
@@ -181,11 +181,11 @@ export default function EventsPage() {
                   </div>
 
                   {/* Event Details */}
-                  <div className={`space-y-6 bg-black p-8 border-4 border-black -rotate-1 relative ${isEven ? 'lg:order-2 shadow-[8px_8px_0px_var(--neon-green)] event-anim-right' : 'lg:order-1 shadow-[8px_8px_0px_var(--neon-pink)] event-anim-left'}`}>
+                  <div className={`space-y-6 bg-black p-6 md:p-8 border-4 border-black -rotate-1 relative ${isEven ? 'lg:order-2 shadow-[6px_6px_0px_var(--neon-green)] lg:shadow-[8px_8px_0px_var(--neon-green)] event-anim-right' : 'lg:order-1 shadow-[6px_6px_0px_var(--neon-pink)] lg:shadow-[8px_8px_0px_var(--neon-pink)] event-anim-left'}`}>
                     
                     {event.featured && (
                       <div className="absolute top-0 right-0 p-4 transform translate-x-4 -translate-y-4">
-                        <span className="bg-[var(--neon-pink)] text-white text-xl font-anton px-4 py-1 border-2 border-black rotate-[12deg] inline-block shadow-[4px_4px_0_#000]">
+                        <span className="bg-[var(--neon-pink)] text-white text-sm md:text-xl font-anton px-4 py-1 border-2 border-black rotate-[12deg] inline-block shadow-[4px_4px_0_#000]">
                           FEATURED
                         </span>
                       </div>
@@ -195,31 +195,31 @@ export default function EventsPage() {
                        {event.category}
                     </span>
 
-                    <h3 className="text-4xl sm:text-6xl font-anton text-white uppercase leading-none text-stroke-black drop-shadow-[4px_4px_0_#000] hover:text-[var(--neon-yellow)] transition-colors">
+                    <h3 className="text-3xl sm:text-4xl md:text-6xl font-anton text-white uppercase leading-none text-stroke-black drop-shadow-[4px_4px_0_#000] hover:text-[var(--neon-yellow)] transition-colors">
                       {event.title}
                     </h3>
 
-                    <p className="text-lg font-bold font-inter text-zinc-300 leading-relaxed">
+                    <p className="text-base md:text-lg font-bold font-inter text-zinc-300 leading-relaxed">
                       {event.description}
                     </p>
 
-                    <div className="space-y-4 pt-6 mt-6 border-t-4 border-dashed border-zinc-800">
+                    <div className="space-y-4 pt-4 md:pt-6 mt-4 md:mt-6 border-t-4 border-dashed border-zinc-800">
                       <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 bg-[var(--neon-pink)] flex items-center justify-center border-2 border-black shadow-[2px_2px_0_#000]">
-                          <Calendar size={24} className="text-black" />
+                        <div className="w-10 h-10 md:w-12 md:h-12 bg-[var(--neon-pink)] flex items-center justify-center border-2 border-black shadow-[2px_2px_0_#000]">
+                          <Calendar size={20} className="text-black" />
                         </div>
                         <div>
-                          <p className="text-2xl font-anton text-white tracking-wider uppercase">
+                          <p className="text-lg md:text-2xl font-anton text-white tracking-wider uppercase">
                             {event.date}
                           </p>
                         </div>
                       </div>
                       <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 bg-[var(--neon-green)] flex items-center justify-center border-2 border-black shadow-[2px_2px_0_#000]">
-                          <MapPin size={24} className="text-black" />
+                        <div className="w-10 h-10 md:w-12 md:h-12 bg-[var(--neon-green)] flex items-center justify-center border-2 border-black shadow-[2px_2px_0_#000]">
+                          <MapPin size={20} className="text-black" />
                         </div>
                         <div>
-                          <p className="text-2xl font-anton text-white tracking-wider uppercase">
+                          <p className="text-lg md:text-2xl font-anton text-white tracking-wider uppercase">
                             {event.venue}
                           </p>
                         </div>

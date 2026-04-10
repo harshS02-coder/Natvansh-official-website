@@ -4,6 +4,11 @@ export interface IDeveloper extends Document {
   name: string;
   role: string;
   image: string;
+  imageTransform: {
+    x: number;
+    y: number;
+    scale: number;
+  };
   github: string;
   linkedin: string;
   portfolio: string;
@@ -17,6 +22,11 @@ const DeveloperSchema = new Schema<IDeveloper>(
     name: { type: String, required: true },
     role: { type: String, required: true },
     image: { type: String, default: "" },
+    imageTransform: {
+      x: { type: Number, default: 0 },
+      y: { type: Number, default: 0 },
+      scale: { type: Number, default: 1 },
+    },
     github: { type: String, default: "" },
     linkedin: { type: String, default: "" },
     portfolio: { type: String, default: "" },

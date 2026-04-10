@@ -9,6 +9,7 @@ interface MemberData {
   role: string;
   position: string;
   image: string;
+  imageTransform: { x: number; y: number; scale: number };
   socialLinks: { instagram?: string; linkedin?: string; email?: string };
   year: string;
   order: number;
@@ -16,6 +17,7 @@ interface MemberData {
 
 const emptyMember: MemberData = {
   name: "", role: "", position: "Post Bearer", image: "",
+  imageTransform: { x: 0, y: 0, scale: 1 },
   socialLinks: { instagram: "", linkedin: "", email: "" },
   year: "", order: 0,
 };
@@ -81,7 +83,7 @@ export default function AdminTeamPage() {
 
       {/* Edit Form */}
       {isEditing && (
-        <div className="bg-zinc-900 border-2 border-[var(--neon-green)] p-6 space-y-4">
+        <div className="bg-zinc-900 border-2 border-[var(--neon-green)] p-6 space-y-6">
           <div className="flex items-center justify-between">
             <h3 className="font-anton text-lg text-white uppercase">{editingMember._id ? "Edit Member" : "New Member"}</h3>
             <button onClick={() => setIsEditing(false)} className="text-zinc-500 hover:text-white"><X size={18} /></button>
@@ -113,10 +115,48 @@ export default function AdminTeamPage() {
               <input className="w-full bg-black border-2 border-zinc-700 text-white px-3 py-2 font-inter focus:border-[var(--neon-yellow)] outline-none" type="number" value={editingMember.order} onChange={(e) => setEditingMember({ ...editingMember, order: parseInt(e.target.value) || 0 })} />
             </div>
             <div>
-              <label className="block text-xs font-inter font-bold mb-1 text-zinc-500 uppercase">Image URL</label>
+              <label className="block text-xs font-inter font-bold mb-1 text-zinc-500 uppercase">Image URL (Bg-less)</label>
               <input className="w-full bg-black border-2 border-zinc-700 text-white px-3 py-2 font-inter focus:border-[var(--neon-yellow)] outline-none" value={editingMember.image} onChange={(e) => setEditingMember({ ...editingMember, image: e.target.value })} placeholder="Image URL" />
             </div>
           </div>
+          
+          {/* Image Transform Controls */}
+          {editingMember.image && (
+            <div className="bg-black border-2 border-zinc-800 p-4">
+              <label className="block text-xs font-inter font-bold mb-4 text-[var(--neon-pink)] uppercase tracking-widest">Image Positioning</label>
+              <div className="grid sm:grid-cols-2 gap-6 items-center">
+                <div className="space-y-4">
+                  <div>
+                    <div className="flex justify-between mb-1"><span className="text-xs font-inter font-bold text-zinc-500 uppercase">X Offset</span><span className="text-xs text-white">{editingMember.imageTransform?.x || 0}px</span></div>
+                    <input type="range" min="-150" max="150" value={editingMember.imageTransform?.x || 0} onChange={(e) => setEditingMember({ ...editingMember, imageTransform: { ...(editingMember.imageTransform || {x:0, y:0, scale:1}), x: parseInt(e.target.value) } })} className="w-full accent-[var(--neon-yellow)]" />
+                  </div>
+                  <div>
+                    <div className="flex justify-between mb-1"><span className="text-xs font-inter font-bold text-zinc-500 uppercase">Y Offset</span><span className="text-xs text-white">{editingMember.imageTransform?.y || 0}px</span></div>
+                    <input type="range" min="-150" max="150" value={editingMember.imageTransform?.y || 0} onChange={(e) => setEditingMember({ ...editingMember, imageTransform: { ...(editingMember.imageTransform || {x:0, y:0, scale:1}), y: parseInt(e.target.value) } })} className="w-full accent-[var(--neon-green)]" />
+                  </div>
+                  <div>
+                    <div className="flex justify-between mb-1"><span className="text-xs font-inter font-bold text-zinc-500 uppercase">Zoom (Scale)</span><span className="text-xs text-white">{editingMember.imageTransform?.scale || 1}</span></div>
+                    <input type="range" min="0.5" max="2" step="0.05" value={editingMember.imageTransform?.scale || 1} onChange={(e) => setEditingMember({ ...editingMember, imageTransform: { ...(editingMember.imageTransform || {x:0, y:0, scale:1}), scale: parseFloat(e.target.value) } })} className="w-full accent-[var(--neon-pink)]" />
+                  </div>
+                </div>
+                
+                {/* Preview Box */}
+                <div className="relative h-48 w-48 mx-auto bg-zinc-900 border-2 border-zinc-700 overflow-hidden flex items-end justify-center rounded-lg">
+                  <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/80 to-transparent z-20"></div>
+                  <img 
+                    src={editingMember.image} 
+                    alt="Preview" 
+                    className="relative z-10 w-full h-[90%] object-cover object-top drop-shadow-[0_0_15px_rgba(255,255,255,0.7)]"
+                    style={{ transform: `translate(${editingMember.imageTransform?.x || 0}px, ${editingMember.imageTransform?.y || 0}px) scale(${editingMember.imageTransform?.scale || 1})` }}
+                  />
+                  <div className="absolute bottom-2 left-0 right-0 text-center z-30">
+                    <span className="text-xs font-anton text-white uppercase tracking-widest bg-black/50 px-2 py-1">Preview</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
           <div className="grid sm:grid-cols-3 gap-4">
             <div>
               <label className="block text-xs font-inter font-bold mb-1 text-zinc-500 uppercase">Instagram</label>

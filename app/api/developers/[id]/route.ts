@@ -17,7 +17,7 @@ export async function PUT(
     const developer = await Developer.findByIdAndUpdate(id, body, { new: true });
     if (!developer) return NextResponse.json({ error: "Developer not found" }, { status: 404 });
     return NextResponse.json(developer);
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "Failed to update developer" }, { status: 500 });
   }
 }
@@ -35,7 +35,7 @@ export async function DELETE(
     const developer = await Developer.findByIdAndDelete(id);
     if (!developer) return NextResponse.json({ error: "Developer not found" }, { status: 404 });
     return NextResponse.json({ message: "Developer deleted" });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "Failed to delete developer" }, { status: 500 });
   }
 }

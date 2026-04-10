@@ -8,7 +8,7 @@ export async function GET() {
     await dbConnect();
     const members = await TeamMember.find().sort({ position: 1, order: 1 });
     return NextResponse.json(members);
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "Failed to fetch team" }, { status: 500 });
   }
 }
@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const member = await TeamMember.create(body);
     return NextResponse.json(member, { status: 201 });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "Failed to create member" }, { status: 500 });
   }
 }

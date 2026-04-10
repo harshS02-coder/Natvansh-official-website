@@ -71,18 +71,18 @@ export default function ClubIntroSection() {
         <div className="grid md:grid-cols-2 gap-12 items-center mt-12">
           {/* Text Content */}
           <div className="intro-text space-y-8 bg-black p-8 border-4 border-black shadow-[10px_10px_0px_var(--neon-pink)] rotate-1">
-            <p className="text-xl font-inter font-bold leading-relaxed text-white">
-              Founded at the National Institute of Technology, Patna, <strong className="text-[var(--neon-green)] text-2xl font-anton uppercase">Natvansh</strong> is
+            <p className="text-base md:text-xl font-inter font-bold leading-relaxed text-white">
+              Founded at the National Institute of Technology, Patna, <strong className="text-[var(--neon-green)] text-xl md:text-2xl font-anton uppercase">Natvansh</strong> is
               the heartbeat of the underground dramatic arts. From the raw, chaotic energy of
-              <span className="font-anton text-2xl uppercase ml-2" style={{ color: "var(--neon-yellow)" }}> nukkad natak </span>
+              <span className="font-anton text-xl md:text-2xl uppercase ml-2" style={{ color: "var(--neon-yellow)" }}> nukkad natak </span>
               to the cinematic grit of short films, we tear up the script.
             </p>
-            <p className="text-xl font-inter font-bold leading-relaxed text-white">
+            <p className="text-base md:text-xl font-inter font-bold leading-relaxed text-white">
               Our culture is fueled by passion, rebellion, and an unyielding belief that
-              <span className="font-anton uppercase block text-3xl mt-4 bg-[var(--neon-pink)] text-black px-2 py-1 inline-block -rotate-2 border-2 border-black"> every story must be told loud </span>
+              <span className="font-anton uppercase block text-2xl md:text-3xl mt-4 bg-[var(--neon-pink)] text-black px-2 py-1 inline-block -rotate-2 border-2 border-black"> every story must be told loud </span>
             </p>
-            <div className="inline-block px-6 py-4 border-4 border-black bg-[var(--neon-yellow)] transform -rotate-2 shadow-[4px_4px_0_#000]">
-              <p className="font-anton text-2xl text-black uppercase">
+            <div className="inline-block px-4 py-3 md:px-6 md:py-4 border-4 border-black bg-[var(--neon-yellow)] transform -rotate-2 shadow-[4px_4px_0_#000]">
+              <p className="font-anton text-xl md:text-2xl text-black uppercase">
                 "THERE IS SOMETHING SPECIAL!"
               </p>
             </div>

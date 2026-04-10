@@ -92,11 +92,11 @@ export default function RecentEventsSection() {
             >
               {placeholderEvent.images.map((img, i) => (
                 <SwiperSlide key={i}>
-                  <div className="relative aspect-[16/10] overflow-hidden border-2 border-black filter grayscale hover:grayscale-0 transition-all duration-300">
+                  <div className="relative aspect-[16/10] overflow-hidden border-2 border-black bg-zinc-950 filter grayscale hover:grayscale-0 transition-all duration-300 flex items-center justify-center">
                     <img
                       src={img}
                       alt={`Event photo ${i + 1}`}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-contain"
                     />
                   </div>
                 </SwiperSlide>
@@ -112,31 +112,31 @@ export default function RecentEventsSection() {
               </span>
             </div>
 
-            <h3 className="text-4xl sm:text-6xl font-anton text-[var(--neon-yellow)] uppercase leading-none text-stroke-black drop-shadow-[4px_4px_0_#000]">
+            <h3 className="text-3xl sm:text-4xl md:text-6xl font-anton text-[var(--neon-yellow)] uppercase leading-none text-stroke-black drop-shadow-[4px_4px_0_#000]">
               {placeholderEvent.title}
             </h3>
 
-            <p className="text-lg font-bold font-inter text-white leading-relaxed">
+            <p className="text-sm md:text-lg font-bold font-inter text-white leading-relaxed">
               {placeholderEvent.description}
             </p>
 
             <div className="space-y-4 pt-4 border-t-2 border-dashed border-zinc-600">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-[var(--neon-pink)] flex items-center justify-center border-2 border-black shadow-[2px_2px_0_#000]">
-                  <Calendar size={24} className="text-black" />
+                <div className="w-10 h-10 md:w-12 md:h-12 bg-[var(--neon-pink)] flex items-center justify-center border-2 border-black shadow-[2px_2px_0_#000]">
+                  <Calendar size={20} className="text-black" />
                 </div>
                 <div>
-                  <p className="text-2xl font-anton text-white tracking-wider">
+                  <p className="text-lg md:text-2xl font-anton text-white tracking-wider">
                     {placeholderEvent.date}
                   </p>
                 </div>
               </div>
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-[var(--neon-green)] flex items-center justify-center border-2 border-black shadow-[2px_2px_0_#000]">
-                  <MapPin size={24} className="text-black" />
+                <div className="w-10 h-10 md:w-12 md:h-12 bg-[var(--neon-green)] flex items-center justify-center border-2 border-black shadow-[2px_2px_0_#000]">
+                  <MapPin size={20} className="text-black" />
                 </div>
                 <div>
-                  <p className="text-2xl font-anton text-white tracking-wider">
+                  <p className="text-lg md:text-2xl font-anton text-white tracking-wider">
                     {placeholderEvent.venue}
                   </p>
                 </div>

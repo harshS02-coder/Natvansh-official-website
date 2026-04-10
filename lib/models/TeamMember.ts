@@ -5,6 +5,11 @@ export interface ITeamMember extends Document {
   role: string;
   position: "Post Bearer" | "Creative" | "Technical" | "Management";
   image: string;
+  imageTransform: {
+    x: number;
+    y: number;
+    scale: number;
+  };
   socialLinks: {
     instagram?: string;
     linkedin?: string;
@@ -26,6 +31,11 @@ const TeamMemberSchema = new Schema<ITeamMember>(
       required: true,
     },
     image: { type: String, default: "" },
+    imageTransform: {
+      x: { type: Number, default: 0 },
+      y: { type: Number, default: 0 },
+      scale: { type: Number, default: 1 },
+    },
     socialLinks: {
       instagram: { type: String, default: "" },
       linkedin: { type: String, default: "" },

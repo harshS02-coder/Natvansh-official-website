@@ -9,6 +9,7 @@ interface DevData {
   name: string;
   role: string;
   image: string;
+  imageTransform: { x: number; y: number; scale: number };
   github: string;
   linkedin: string;
   portfolio: string;
@@ -17,6 +18,7 @@ interface DevData {
 
 const emptyDev: DevData = {
   name: "", role: "", image: "", github: "", linkedin: "", portfolio: "", order: 0,
+  imageTransform: { x: 0, y: 0, scale: 1 },
 };
 
 export default function AdminDevelopersPage() {
@@ -65,7 +67,7 @@ export default function AdminDevelopersPage() {
       </div>
 
       {isEditing && (
-        <div className="bg-zinc-900 border-2 border-[var(--neon-green)] p-6 space-y-4">
+        <div className="bg-zinc-900 border-2 border-[var(--neon-green)] p-6 space-y-6">
           <div className="flex items-center justify-between">
             <h3 className="font-anton text-lg text-white uppercase">{editingDev._id ? "Edit Developer" : "New Developer"}</h3>
             <button onClick={() => setIsEditing(false)} className="text-zinc-500 hover:text-white"><X size={18} /></button>
@@ -78,10 +80,6 @@ export default function AdminDevelopersPage() {
             <div>
               <label className="block text-xs font-inter font-bold mb-1 text-zinc-500 uppercase">Role</label>
               <input className="w-full bg-black border-2 border-zinc-700 text-white px-3 py-2 font-inter focus:border-[var(--neon-yellow)] outline-none" value={editingDev.role} onChange={(e) => setEditingDev({ ...editingDev, role: e.target.value })} placeholder="e.g. Full-Stack Developer" />
-            </div>
-            <div>
-              <label className="block text-xs font-inter font-bold mb-1 text-zinc-500 uppercase">Image URL</label>
-              <input className="w-full bg-black border-2 border-zinc-700 text-white px-3 py-2 font-inter focus:border-[var(--neon-yellow)] outline-none" value={editingDev.image} onChange={(e) => setEditingDev({ ...editingDev, image: e.target.value })} placeholder="Image URL" />
             </div>
             <div>
               <label className="block text-xs font-inter font-bold mb-1 text-zinc-500 uppercase">GitHub</label>
@@ -99,7 +97,49 @@ export default function AdminDevelopersPage() {
               <label className="block text-xs font-inter font-bold mb-1 text-zinc-500 uppercase">Order</label>
               <input className="w-full bg-black border-2 border-zinc-700 text-white px-3 py-2 font-inter focus:border-[var(--neon-yellow)] outline-none" type="number" value={editingDev.order} onChange={(e) => setEditingDev({ ...editingDev, order: parseInt(e.target.value) || 0 })} />
             </div>
+            <div className="sm:col-span-2">
+              <label className="block text-xs font-inter font-bold mb-1 text-zinc-500 uppercase">Image URL (Bg-less)</label>
+              <input className="w-full bg-black border-2 border-zinc-700 text-white px-3 py-2 font-inter focus:border-[var(--neon-yellow)] outline-none" value={editingDev.image} onChange={(e) => setEditingDev({ ...editingDev, image: e.target.value })} placeholder="Image URL" />
+            </div>
           </div>
+          
+          {/* Image Transform Controls */}
+          {editingDev.image && (
+            <div className="bg-black border-2 border-zinc-800 p-4">
+              <label className="block text-xs font-inter font-bold mb-4 text-[var(--neon-pink)] uppercase tracking-widest">Image Positioning</label>
+              <div className="grid sm:grid-cols-2 gap-6 items-center">
+                <div className="space-y-4">
+                  <div>
+                    <div className="flex justify-between mb-1"><span className="text-xs font-inter font-bold text-zinc-500 uppercase">X Offset</span><span className="text-xs text-white">{editingDev.imageTransform?.x || 0}px</span></div>
+                    <input type="range" min="-150" max="150" value={editingDev.imageTransform?.x || 0} onChange={(e) => setEditingDev({ ...editingDev, imageTransform: { ...(editingDev.imageTransform || {x:0, y:0, scale:1}), x: parseInt(e.target.value) } })} className="w-full accent-[var(--neon-yellow)]" />
+                  </div>
+                  <div>
+                    <div className="flex justify-between mb-1"><span className="text-xs font-inter font-bold text-zinc-500 uppercase">Y Offset</span><span className="text-xs text-white">{editingDev.imageTransform?.y || 0}px</span></div>
+                    <input type="range" min="-150" max="150" value={editingDev.imageTransform?.y || 0} onChange={(e) => setEditingDev({ ...editingDev, imageTransform: { ...(editingDev.imageTransform || {x:0, y:0, scale:1}), y: parseInt(e.target.value) } })} className="w-full accent-[var(--neon-green)]" />
+                  </div>
+                  <div>
+                    <div className="flex justify-between mb-1"><span className="text-xs font-inter font-bold text-zinc-500 uppercase">Zoom (Scale)</span><span className="text-xs text-white">{editingDev.imageTransform?.scale || 1}</span></div>
+                    <input type="range" min="0.5" max="2" step="0.05" value={editingDev.imageTransform?.scale || 1} onChange={(e) => setEditingDev({ ...editingDev, imageTransform: { ...(editingDev.imageTransform || {x:0, y:0, scale:1}), scale: parseFloat(e.target.value) } })} className="w-full accent-[var(--neon-pink)]" />
+                  </div>
+                </div>
+                
+                {/* Preview Box */}
+                <div className="relative h-48 w-48 mx-auto bg-zinc-900 border-2 border-zinc-700 overflow-hidden flex items-end justify-center rounded-lg">
+                  <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/80 to-transparent z-20"></div>
+                  <img 
+                    src={editingDev.image} 
+                    alt="Preview" 
+                    className="relative z-10 w-full h-[90%] object-cover object-top drop-shadow-[0_0_15px_rgba(255,255,255,0.7)]"
+                    style={{ transform: `translate(${editingDev.imageTransform?.x || 0}px, ${editingDev.imageTransform?.y || 0}px) scale(${editingDev.imageTransform?.scale || 1})` }}
+                  />
+                  <div className="absolute bottom-2 left-0 right-0 text-center z-30">
+                    <span className="text-xs font-anton text-white uppercase tracking-widest bg-black/50 px-2 py-1">Preview</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
           <div className="flex justify-end gap-2">
             <button className="px-4 py-2 font-anton text-sm uppercase text-zinc-400 border-2 border-zinc-700 hover:bg-zinc-800 transition-colors" onClick={() => setIsEditing(false)}>Cancel</button>
             <button className="px-4 py-2 font-anton text-sm uppercase bg-[var(--neon-green)] text-black border-2 border-black shadow-[4px_4px_0_#000] hover:-translate-y-1 transition-transform flex items-center gap-2" onClick={handleSave}><Save size={14} /> Save</button>
