@@ -83,17 +83,17 @@ export default function GalleryPage() {
 
         {/* Gallery Grid */}
         <section className="px-4 sm:px-6 lg:px-8 py-20 bg-grunge-dark halftone-overlay relative">
-          <div className="max-w-7xl mx-auto gallery-grid grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 relative z-10">
+          <div className="max-w-7xl mx-auto gallery-grid columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-6 relative z-10">
             {images.map((image, idx) => (
               <div 
                 key={image._id || idx} 
-                className={`gallery-item relative overflow-hidden group cursor-pointer border-4 border-black shadow-[8px_8px_0_#FFF] hover:shadow-[10px_10px_0_var(--neon-yellow)] hover:-translate-y-2 hover:-translate-x-2 transition-all duration-300 bg-zinc-900 ${idx === 0 || idx === 4 ? 'row-span-2' : ''}`}
+                className={`gallery-item break-inside-avoid mb-6 relative overflow-hidden group cursor-pointer border-4 border-black shadow-[8px_8px_0_#FFF] hover:shadow-[10px_10px_0_var(--neon-yellow)] hover:-translate-y-2 hover:-translate-x-2 transition-all duration-300 bg-zinc-900`}
                 style={{ transform: `rotate(${(idx % 3 - 1) * 0.8}deg)` }}
               >
                 <img 
                   src={image.image} 
                   alt={image.title} 
-                  className="w-full h-full object-cover filter grayscale hover:grayscale-0 transition-all duration-500 min-h-[200px]" 
+                  className="w-full h-auto object-cover filter grayscale hover:grayscale-0 transition-all duration-500" 
                 />
                 
                 {/* Overlay Text */}

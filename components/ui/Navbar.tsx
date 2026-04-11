@@ -37,10 +37,10 @@ export default function Navbar() {
           }`}
       >
         <div className="absolute inset-0 bg-black/60 halftone-overlay opacity-80 pointer-events-none"></div>
-        <div className="relative w-full h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between z-10">
+        <div className="relative w-full h-full max-w-[100vw] px-0 flex items-center justify-between z-10">
 
           {/* Pop-out Logo */}
-          <Link href="/" className="relative flex items-center shrink-0 w-[80px] sm:w-[120px] md:w-[200px] h-full z-50">
+          <Link href="/" className="relative flex items-center shrink-0 w-[80px] sm:w-[120px] md:w-[200px] h-full z-50 ml-0 pl-1 sm:pl-3">
             <img
               src="/images/logo.png"
               alt="Natvansh Logo"
@@ -68,7 +68,7 @@ export default function Navbar() {
           </div>
 
           {/* Right Side / Mobile toggle */}
-          <div className="flex items-center">
+          <div className="flex items-center pr-2 sm:pr-4">
             <button
               onClick={() => setIsMobileOpen(true)}
               className="md:hidden p-2 text-white hover:text-[var(--neon-yellow)] transition-colors"

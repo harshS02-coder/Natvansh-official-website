@@ -12,6 +12,7 @@ interface MemberData {
   imageTransform: { x: number; y: number; scale: number };
   socialLinks: { instagram?: string; linkedin?: string; email?: string };
   year: string;
+  campus: string;
   order: number;
 }
 
@@ -19,7 +20,7 @@ const emptyMember: MemberData = {
   name: "", role: "", position: "Post Bearer", image: "",
   imageTransform: { x: 0, y: 0, scale: 1 },
   socialLinks: { instagram: "", linkedin: "", email: "" },
-  year: "", order: 0,
+  year: "", campus: "Patna", order: 0,
 };
 
 export default function AdminTeamPage() {
@@ -111,6 +112,13 @@ export default function AdminTeamPage() {
               <input className="w-full bg-black border-2 border-zinc-700 text-white px-3 py-2 font-inter focus:border-[var(--neon-yellow)] outline-none" value={editingMember.year} onChange={(e) => setEditingMember({ ...editingMember, year: e.target.value })} placeholder="e.g. 2025" />
             </div>
             <div>
+              <label className="block text-xs font-inter font-bold mb-1 text-zinc-500 uppercase">Campus</label>
+              <select className="w-full bg-black border-2 border-zinc-700 text-white px-3 py-2 font-inter focus:border-[var(--neon-yellow)] outline-none" value={editingMember.campus} onChange={(e) => setEditingMember({ ...editingMember, campus: e.target.value })}>
+                <option value="Patna">Patna</option>
+                <option value="Bihta">Bihta</option>
+              </select>
+            </div>
+            <div>
               <label className="block text-xs font-inter font-bold mb-1 text-zinc-500 uppercase">Order</label>
               <input className="w-full bg-black border-2 border-zinc-700 text-white px-3 py-2 font-inter focus:border-[var(--neon-yellow)] outline-none" type="number" value={editingMember.order} onChange={(e) => setEditingMember({ ...editingMember, order: parseInt(e.target.value) || 0 })} />
             </div>
@@ -199,7 +207,12 @@ export default function AdminTeamPage() {
                       </div>
                     )}
                     <div className="flex-1 min-w-0">
-                      <h4 className="font-inter font-bold text-sm text-white truncate">{m.name}</h4>
+                      <div className="flex items-center gap-2">
+                         <h4 className="font-inter font-bold text-sm text-white truncate">{m.name}</h4>
+                         <span className={`text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded-sm text-black ${m.campus === "Bihta" ? "bg-[var(--neon-cyan)]" : "bg-[var(--neon-yellow)]"}`}>
+                           {m.campus || "Patna"}
+                         </span>
+                      </div>
                       <p className="text-xs text-zinc-500">{m.role}</p>
                     </div>
                     <div className="flex items-center gap-1 shrink-0">

@@ -5,6 +5,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Sparkles } from "lucide-react";
+import heroImage from "@/public/images/heroImage.png";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -71,8 +72,8 @@ export default function HeroSection() {
         {/* Masterpiece Title */}
         <h1
           ref={titleRef}
-          className="text-[11vw] sm:text-[10vw] md:text-[9vw] lg:text-[140px] font-anton leading-[0.85] tracking-tight mb-2 md:mb-4 flex overflow-visible text-[var(--neon-cyan)] drop-shadow-[2px_2px_0_#000] sm:drop-shadow-[4px_4px_0_#000] md:drop-shadow-[12px_12px_0_#000] stroke-black text-stroke-black"
-          style={{ WebkitTextStroke: "2px black", transform: "rotate(-2deg)" }}
+          className="text-[18vw] sm:text-[16vw] md:text-[14vw] lg:text-[200px] font-anton leading-[0.8] tracking-widest mb-2 md:mb-6 flex overflow-visible text-[var(--neon-cyan)] drop-shadow-[3px_3px_0_#000] sm:drop-shadow-[6px_6px_0_#000] md:drop-shadow-[15px_15px_0_#000] stroke-black text-stroke-black"
+          style={{ WebkitTextStroke: "3px black", transform: "rotate(-2deg)" }}
         >
           {Array.from("NATVANSH").map((char, i) => (
             <span key={i} className="hero-char inline-block" style={{ transform: i % 2 === 0 ? 'translateY(-4px)' : 'translateY(4px)' }}>
@@ -85,7 +86,7 @@ export default function HeroSection() {
           Drama & Film Club
         </h1>
 
-        <div className="hero-subtitle bg-[var(--neon-green)] border-2 md:border-4 border-black p-3 sm:p-4 md:p-5 shadow-[4px_4px_0_var(--neon-pink)] sm:shadow-[6px_6px_0_var(--neon-pink)] md:shadow-[8px_8px_0_var(--neon-pink)] transform -rotate-1 max-w-xl w-full text-center mb-6 sm:mb-10">
+        <div className="hero-subtitle bg-[#B27DC2] border-2 md:border-4 border-black p-3 sm:p-4 md:p-5 shadow-[4px_4px_0_var(--neon-pink)] sm:shadow-[6px_6px_0_var(--neon-pink)] md:shadow-[8px_8px_0_var(--neon-pink)] transform -rotate-1 max-w-xl w-full text-center mb-6 sm:mb-10">
           <p className="text-sm sm:text-base md:text-xl text-black font-inter font-black leading-relaxed">
             Where every emotion finds its stage and every story finds its screen.
           </p>

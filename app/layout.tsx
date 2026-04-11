@@ -25,6 +25,7 @@ const bebasNeue = Bebas_Neue({
 });
 
 import SplashScreen from "@/components/ui/SplashScreen";
+import CustomCursor from "@/components/ui/CustomCursor";
 
 export const metadata: Metadata = {
   title: "Natvansh — Drama & Film Club | NIT Patna",
@@ -61,6 +62,7 @@ export default function RootLayout({
       >
         <body className="min-h-screen antialiased">
           <ThemeProvider>
+            <CustomCursor />
             <SplashScreen />
             {children}
           </ThemeProvider>

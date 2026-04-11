@@ -16,6 +16,7 @@ export interface ITeamMember extends Document {
     email?: string;
   };
   year: string;
+  campus: "Patna" | "Bihta";
   order: number;
   createdAt: Date;
   updatedAt: Date;
@@ -42,6 +43,11 @@ const TeamMemberSchema = new Schema<ITeamMember>(
       email: { type: String, default: "" },
     },
     year: { type: String, default: "" },
+    campus: { 
+      type: String, 
+      enum: ["Patna", "Bihta"], 
+      default: "Patna" 
+    },
     order: { type: Number, default: 0 },
   },
   { timestamps: true }

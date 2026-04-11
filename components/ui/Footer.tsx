@@ -15,12 +15,12 @@ export default function Footer() {
     <footer className="relative bg-[url('/images/nav_footer_bg.png')] bg-cover bg-center border-t-4 sm:border-t-8 border-white overflow-hidden py-8 sm:py-12">
       <div className="absolute inset-0 bg-black/60 halftone-overlay opacity-50 pointer-events-none"></div>
       
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="flex flex-col items-center gap-6 sm:gap-8 md:flex-row md:justify-between">
+      <div className="w-full max-w-[100vw] mx-auto px-0 relative z-10">
+        <div className="flex flex-col items-start gap-6 sm:gap-8 md:flex-row md:items-center md:justify-between">
           
           {/* LEFT: Branding */}
-          <div className="flex flex-col items-center md:items-start shrink-0">
-            <Link href="/" className="flex items-center">
+          <div className="flex flex-col items-start shrink-0">
+            <Link href="/" className="flex items-center ml-0 pl-1 sm:pl-3">
               <img 
                 src="/images/logo.png" 
                 alt="Natvansh Logo" 
@@ -30,7 +30,7 @@ export default function Footer() {
           </div>
 
           {/* MIDDLE: Address */}
-          <div className="text-center md:text-right md:border-l-4 md:border-white md:pl-8">
+          <div className="text-left md:text-right md:border-l-4 md:border-white pl-4 sm:pl-6 md:pl-8">
             <p className="text-sm sm:text-base md:text-lg font-bold font-inter text-white leading-relaxed">
               Natvansh Office, Student Activity Center (SAC),<br/>
               NIT Patna, Ashok Rajpath, Patna, Bihar - 800005
@@ -38,7 +38,7 @@ export default function Footer() {
           </div>
 
           {/* RIGHT: Socials */}
-          <div className="flex items-center gap-4 sm:gap-6">
+          <div className="flex items-center gap-4 sm:gap-6 pr-2 sm:pr-4 pl-4 sm:pl-6 md:pl-0">
             {socialLinks.map((social) => (
               <a
                 key={social.label}
@@ -56,7 +56,7 @@ export default function Footer() {
         </div>
 
         {/* BOTTOM ROW: Links & Copyright */}
-        <div className="mt-8 sm:mt-12 pt-4 sm:pt-6 border-t-2 border-dashed border-zinc-700 flex flex-col items-center gap-4 md:flex-row md:justify-between">
+        <div className="mt-8 sm:mt-12 pt-4 sm:pt-6 px-4 sm:px-8 border-t-2 border-dashed border-zinc-700 flex flex-col items-center gap-4 md:flex-row md:justify-between">
           <div className="flex flex-wrap gap-4 sm:gap-6 font-anton text-sm sm:text-base md:text-lg tracking-wider text-white justify-center">
             <Link href="/" className="hover:text-[var(--neon-yellow)]">HOME</Link>
             <Link href="/events" className="hover:text-[var(--neon-green)]">EVENTS</Link>

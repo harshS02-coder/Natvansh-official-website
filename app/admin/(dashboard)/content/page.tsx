@@ -187,8 +187,37 @@ export default function AdminContentPage() {
               </div>
             )}
 
-            {/* Metadata Fields */}
-            {section.metadata && Object.keys(section.metadata).length > 0 && (
+            {/* Events Specific Metadata Fields */}
+            {section.section === "recent_events" && (
+              <div className="bg-zinc-950 p-4 border-2 border-zinc-700 mt-4 space-y-4">
+                <h4 className="font-anton text-[var(--neon-green)] tracking-widest text-sm mb-2">EVENT DETAILS SETTINGS</h4>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-[10px] uppercase tracking-wider mb-1 text-zinc-500 font-inter font-bold">Event Title</label>
+                    <input className="w-full bg-black border-2 border-zinc-700 text-white px-3 py-2 font-inter focus:border-[var(--neon-yellow)] outline-none" value={section.metadata?.eventTitle || ""} onChange={(e) => updateMetadata(section.section, "eventTitle", e.target.value)} placeholder="e.g. RANGMANCH '25" />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] uppercase tracking-wider mb-1 text-zinc-500 font-inter font-bold">Event Date</label>
+                    <input className="w-full bg-black border-2 border-zinc-700 text-white px-3 py-2 font-inter focus:border-[var(--neon-yellow)] outline-none" value={section.metadata?.eventDate || ""} onChange={(e) => updateMetadata(section.section, "eventDate", e.target.value)} placeholder="e.g. MARCH 15-17" />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] uppercase tracking-wider mb-1 text-zinc-500 font-inter font-bold">Event Venue</label>
+                    <input className="w-full bg-black border-2 border-zinc-700 text-white px-3 py-2 font-inter focus:border-[var(--neon-yellow)] outline-none" value={section.metadata?.eventVenue || ""} onChange={(e) => updateMetadata(section.section, "eventVenue", e.target.value)} placeholder="e.g. CULTURAL COMPLEX" />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] uppercase tracking-wider mb-1 text-zinc-500 font-inter font-bold">Button Text</label>
+                    <input className="w-full bg-black border-2 border-zinc-700 text-white px-3 py-2 font-inter focus:border-[var(--neon-yellow)] outline-none" value={section.metadata?.buttonText || ""} onChange={(e) => updateMetadata(section.section, "buttonText", e.target.value)} placeholder="e.g. VIEW ALL EVENTS" />
+                  </div>
+                  <div className="sm:col-span-2">
+                    <label className="block text-[10px] uppercase tracking-wider mb-1 text-zinc-500 font-inter font-bold">Event Description</label>
+                    <textarea rows={2} className="w-full bg-black border-2 border-zinc-700 text-white px-3 py-2 font-inter focus:border-[var(--neon-yellow)] outline-none" value={section.metadata?.eventDescription || ""} onChange={(e) => updateMetadata(section.section, "eventDescription", e.target.value)} placeholder="Short description of the event..." />
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* General Metadata Fields (for non-event sections) */}
+            {section.section !== "recent_events" && section.metadata && Object.keys(section.metadata).length > 0 && (
               <div>
                 <label className="block text-xs font-inter font-bold mb-2 text-zinc-500 uppercase">Metadata</label>
                 <div className="grid sm:grid-cols-2 gap-3">
