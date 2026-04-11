@@ -45,7 +45,15 @@ const defaultContent: ContentSection[] = [
     title: "RECENT EVENTS",
     content: "Get a glimpse into our latest high-voltage productions.",
     image: "",
-    metadata: { accent: "SPOTLIGHT", buttonText: "VIEW ALL EVENTS" },
+    images: [],
+    metadata: { 
+      accent: "SPOTLIGHT", 
+      buttonText: "VIEW ALL EVENTS",
+      eventTitle: "RANGMANCH '25",
+      eventDescription: "The flagship annual drama festival of Natvansh featuring theatrical performances, monologue competitions, short film screenings, and workshops.",
+      eventDate: "MARCH 15-17",
+      eventVenue: "CULTURAL COMPLEX"
+    },
   },
 ];
 

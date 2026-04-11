@@ -28,26 +28,14 @@ const placeholderEvent = {
 
 export default function RecentEventsSection() {
   const container = useRef<HTMLDivElement>(null);
-  const [featuredEvent, setFeaturedEvent] = useState<any>(placeholderEvent);
   const [content, setContent] = useState<any>(null);
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const [eventsRes, contentRes] = await Promise.all([
-          fetch("/api/events"),
-          fetch("/api/content/recent_events"),
-        ]);
-        if (eventsRes.ok) {
-          const events = await eventsRes.json();
-          // Find first featured event, or just first event
-          const mainEvent = events.find((e: any) => e.featured) || events[0];
-          if (mainEvent) {
-            setFeaturedEvent(mainEvent);
-          }
-        }
-        if (contentRes.ok) {
-          const contentData = await contentRes.json();
+        const res = await fetch("/api/content/recent_events");
+        if (res.ok) {
+          const contentData = await res.json();
           setContent(contentData);
         }
       } catch (err) {
@@ -118,7 +106,7 @@ export default function RecentEventsSection() {
                 modules={[EffectCoverflow, Pagination, Autoplay]}
                 className="overflow-hidden"
               >
-                {(featuredEvent?.images?.length ? featuredEvent.images : placeholderEvent.images).map((img: string, i: number) => (
+                {(content?.images?.length ? content.images : placeholderEvent.images).map((img: string, i: number) => (
                   <SwiperSlide key={i}>
                     <div className="relative aspect-[16/10] overflow-hidden border-2 border-black bg-zinc-950 filter grayscale hover:grayscale-0 transition-all duration-300 flex items-center justify-center">
                       <img
@@ -141,11 +129,11 @@ export default function RecentEventsSection() {
             </div>
 
             <h3 className="text-3xl sm:text-4xl md:text-6xl font-anton text-[var(--neon-yellow)] uppercase leading-none text-stroke-black drop-shadow-[4px_4px_0_#000]">
-              {featuredEvent?.title || placeholderEvent.title}
+              {content?.metadata?.eventTitle || placeholderEvent.title}
             </h3>
 
             <p className="text-sm md:text-lg font-bold font-inter text-white leading-relaxed">
-              {featuredEvent?.description || placeholderEvent.description}
+              {content?.metadata?.eventDescription || placeholderEvent.description}
             </p>
 
             <div className="space-y-4 pt-4 border-t-2 border-dashed border-zinc-600">
@@ -155,7 +143,7 @@ export default function RecentEventsSection() {
                 </div>
                 <div>
                   <p className="text-lg md:text-2xl font-anton text-white tracking-wider">
-                    {featuredEvent?.date || placeholderEvent.date}
+                    {content?.metadata?.eventDate || placeholderEvent.date}
                   </p>
                 </div>
               </div>
@@ -165,7 +153,7 @@ export default function RecentEventsSection() {
                 </div>
                 <div>
                   <p className="text-lg md:text-2xl font-anton text-white tracking-wider">
-                    {featuredEvent?.venue || placeholderEvent.venue}
+                    {content?.metadata?.eventVenue || placeholderEvent.venue}
                   </p>
                 </div>
               </div>
