@@ -40,6 +40,13 @@ const defaultContent: ContentSection[] = [
     image: "",
     metadata: { designation: "Professor In-Charge, Natvansh", department: "Department of Humanities & Social Sciences, NIT Patna" },
   },
+  {
+    section: "recent_events",
+    title: "RECENT EVENTS",
+    content: "Get a glimpse into our latest high-voltage productions.",
+    image: "",
+    metadata: { accent: "SPOTLIGHT", buttonText: "VIEW ALL EVENTS" },
+  },
 ];
 
 export default function AdminContentPage() {

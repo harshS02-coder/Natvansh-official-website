@@ -29,24 +29,32 @@ const placeholderEvent = {
 export default function RecentEventsSection() {
   const container = useRef<HTMLDivElement>(null);
   const [featuredEvent, setFeaturedEvent] = useState<any>(placeholderEvent);
+  const [content, setContent] = useState<any>(null);
 
   useEffect(() => {
-    async function fetchEvents() {
+    async function fetchData() {
       try {
-        const res = await fetch("/api/events");
-        if (res.ok) {
-          const events = await res.json();
+        const [eventsRes, contentRes] = await Promise.all([
+          fetch("/api/events"),
+          fetch("/api/content/recent_events"),
+        ]);
+        if (eventsRes.ok) {
+          const events = await eventsRes.json();
           // Find first featured event, or just first event
           const mainEvent = events.find((e: any) => e.featured) || events[0];
           if (mainEvent) {
             setFeaturedEvent(mainEvent);
           }
         }
+        if (contentRes.ok) {
+          const contentData = await contentRes.json();
+          setContent(contentData);
+        }
       } catch (err) {
-        console.error("Failed to fetch events for landing page:", err);
+        console.error("Failed to fetch data for recent events landing page:", err);
       }
     }
-    fetchEvents();
+    fetchData();
   }, []);
 
   useGSAP(
@@ -85,9 +93,9 @@ export default function RecentEventsSection() {
     >
       <div className="max-w-7xl mx-auto relative z-10">
         <SectionHeading
-          accent="SPOTLIGHT"
-          title="RECENT EVENTS"
-          subtitle="Get a glimpse into our latest high-voltage productions."
+          accent={content?.metadata?.accent || "SPOTLIGHT"}
+          title={content?.title || "RECENT EVENTS"}
+          subtitle={content?.content || "Get a glimpse into our latest high-voltage productions."}
         />
 
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 mt-12 items-center">
@@ -165,7 +173,7 @@ export default function RecentEventsSection() {
 
             <div className="pt-6">
               <Link href="/events" className="grunge-btn w-full">
-                VIEW ALL EVENTS <ArrowRight size={24} className="ml-2" />
+                {content?.metadata?.buttonText || "VIEW ALL EVENTS"} <ArrowRight size={24} className="ml-2" />
               </Link>
             </div>
           </div>
