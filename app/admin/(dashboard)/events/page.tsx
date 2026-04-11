@@ -126,7 +126,7 @@ export default function AdminEventsPage() {
           <div>
             <label className="block text-xs font-inter font-bold mb-2 text-zinc-500 uppercase">Images</label>
             <div className="flex gap-2 mb-3">
-              <input className="flex-1 bg-black border-2 border-zinc-700 text-white px-3 py-2 font-inter focus:border-[var(--neon-yellow)] outline-none" value={newImageUrl} onChange={(e) => setNewImageUrl(e.target.value)} placeholder="Paste image URL and click Add" onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addImageUrl())} />
+              <input className="flex-1 bg-black border-2 border-zinc-700 text-white px-3 py-2 font-inter focus:border-[var(--neon-yellow)] outline-none" value={newImageUrl} onChange={(e) => setNewImageUrl(e.target.value)} placeholder="Paste cloudinary image URL and click Add" onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addImageUrl())} />
               <button className="px-4 py-2 font-anton text-sm uppercase bg-[var(--neon-green)] text-black border-2 border-black shadow-[2px_2px_0_#000] hover:-translate-y-0.5 transition-transform" onClick={addImageUrl}>Add</button>
             </div>
             <div className="flex flex-wrap gap-2">
