@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -28,6 +28,26 @@ const placeholderEvent = {
 
 export default function RecentEventsSection() {
   const container = useRef<HTMLDivElement>(null);
+  const [featuredEvent, setFeaturedEvent] = useState<any>(placeholderEvent);
+
+  useEffect(() => {
+    async function fetchEvents() {
+      try {
+        const res = await fetch("/api/events");
+        if (res.ok) {
+          const events = await res.json();
+          // Find first featured event, or just first event
+          const mainEvent = events.find((e: any) => e.featured) || events[0];
+          if (mainEvent) {
+            setFeaturedEvent(mainEvent);
+          }
+        }
+      } catch (err) {
+        console.error("Failed to fetch events for landing page:", err);
+      }
+    }
+    fetchEvents();
+  }, []);
 
   useGSAP(
     () => {
@@ -73,35 +93,35 @@ export default function RecentEventsSection() {
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 mt-12 items-center">
           {/* Image Carousel — Left */}
           <div className="event-carousel p-4 bg-black border-4 border-black shadow-[8px_8px_0px_#FFFF00] rotate-1">
-            <Swiper
-              effect="coverflow"
-              grabCursor
-              centeredSlides
-              slidesPerView={1}
-              coverflowEffect={{
-                rotate: 0,
-                stretch: 0,
-                depth: 100,
-                modifier: 1,
-                slideShadows: false,
-              }}
-              pagination={{ clickable: true }}
-              autoplay={{ delay: 3500, disableOnInteraction: false }}
-              modules={[EffectCoverflow, Pagination, Autoplay]}
-              className="overflow-hidden"
-            >
-              {placeholderEvent.images.map((img, i) => (
-                <SwiperSlide key={i}>
-                  <div className="relative aspect-[16/10] overflow-hidden border-2 border-black bg-zinc-950 filter grayscale hover:grayscale-0 transition-all duration-300 flex items-center justify-center">
-                    <img
-                      src={img}
-                      alt={`Event photo ${i + 1}`}
-                      className="w-full h-full object-contain"
-                    />
-                  </div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
+              <Swiper
+                effect="coverflow"
+                grabCursor
+                centeredSlides
+                slidesPerView={1}
+                coverflowEffect={{
+                  rotate: 0,
+                  stretch: 0,
+                  depth: 100,
+                  modifier: 1,
+                  slideShadows: false,
+                }}
+                pagination={{ clickable: true }}
+                autoplay={{ delay: 3500, disableOnInteraction: false }}
+                modules={[EffectCoverflow, Pagination, Autoplay]}
+                className="overflow-hidden"
+              >
+                {(featuredEvent?.images?.length ? featuredEvent.images : placeholderEvent.images).map((img: string, i: number) => (
+                  <SwiperSlide key={i}>
+                    <div className="relative aspect-[16/10] overflow-hidden border-2 border-black bg-zinc-950 filter grayscale hover:grayscale-0 transition-all duration-300 flex items-center justify-center">
+                      <img
+                        src={img}
+                        alt={`Event photo ${i + 1}`}
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
           </div>
 
           {/* Event Details — Right */}
@@ -113,11 +133,11 @@ export default function RecentEventsSection() {
             </div>
 
             <h3 className="text-3xl sm:text-4xl md:text-6xl font-anton text-[var(--neon-yellow)] uppercase leading-none text-stroke-black drop-shadow-[4px_4px_0_#000]">
-              {placeholderEvent.title}
+              {featuredEvent?.title || placeholderEvent.title}
             </h3>
 
             <p className="text-sm md:text-lg font-bold font-inter text-white leading-relaxed">
-              {placeholderEvent.description}
+              {featuredEvent?.description || placeholderEvent.description}
             </p>
 
             <div className="space-y-4 pt-4 border-t-2 border-dashed border-zinc-600">
@@ -127,7 +147,7 @@ export default function RecentEventsSection() {
                 </div>
                 <div>
                   <p className="text-lg md:text-2xl font-anton text-white tracking-wider">
-                    {placeholderEvent.date}
+                    {featuredEvent?.date || placeholderEvent.date}
                   </p>
                 </div>
               </div>
@@ -137,7 +157,7 @@ export default function RecentEventsSection() {
                 </div>
                 <div>
                   <p className="text-lg md:text-2xl font-anton text-white tracking-wider">
-                    {placeholderEvent.venue}
+                    {featuredEvent?.venue || placeholderEvent.venue}
                   </p>
                 </div>
               </div>
