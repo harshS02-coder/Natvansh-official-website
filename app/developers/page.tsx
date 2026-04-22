@@ -57,7 +57,7 @@ const DevCard = ({ dev }: { dev: DevItem }) => {
           src={dev.image || fallbackImage} 
           alt={dev.name} 
           loading="lazy"
-          className="relative z-10 w-full h-[90%] object-cover object-top mask-image-bottom drop-shadow-[0_0_12px_rgba(255,255,255,0.8)] filter contrast-125 saturate-150 grayscale hover:grayscale-0 transition-all duration-500 ease-in-out cursor-pointer"
+          className="relative z-10 w-full h-[90%] object-cover object-top mask-image-bottom drop-shadow-[0_0_12px_rgba(255,255,255,0.8)] filter contrast-125 saturate-150 transition-all duration-500 ease-in-out cursor-pointer"
           style={{ transform: transformStyle }}
         />
         <div className="absolute top-4 right-4 w-12 h-12 rounded-full flex items-center justify-center bg-black border-2 border-[var(--neon-pink)] shadow-[2px_2px_0_#FFF] z-20 transform rotate-[10deg]">

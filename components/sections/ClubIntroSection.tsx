@@ -119,7 +119,7 @@ export default function ClubIntroSection() {
                         src={src}
                         alt={`Club activity ${i + 1}`}
                         loading="lazy"
-                        className="w-full h-full object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
+                        className="w-full h-full object-contain transition-all duration-300"
                     />
                     {/* Decorative tape on photos */}
                     <div className="absolute top-[-8px] sm:top-[-10px] left-1/2 -translate-x-1/2 w-16 sm:w-24 h-4 sm:h-6 bg-white border-2 border-black rotate-[-3deg] opacity-80 mix-blend-screen" style={{ boxShadow: "inset 0 0 4px rgba(0,0,0,0.5)"}}></div>

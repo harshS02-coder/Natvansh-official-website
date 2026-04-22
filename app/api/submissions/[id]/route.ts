@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
 import dbConnect from "@/lib/mongodb";
-import GalleryImage from "@/lib/models/GalleryImage";
+import ContactSubmission from "@/lib/models/ContactSubmission";
 import { invalidateCache } from "@/lib/cache";
 
-const CACHE_KEY = "gallery:all";
+const CACHE_KEY = "submissions:all";
 
 export async function PUT(
   request: NextRequest,
@@ -17,16 +17,16 @@ export async function PUT(
     const { id } = await params;
     await dbConnect();
     const body = await request.json();
-    const image = await GalleryImage.findByIdAndUpdate(id, body, { new: true });
-    if (!image) return NextResponse.json({ error: "Image not found" }, { status: 404 });
+    const submission = await ContactSubmission.findByIdAndUpdate(id, body, { new: true });
+    if (!submission) return NextResponse.json({ error: "Submission not found" }, { status: 404 });
 
     await invalidateCache(CACHE_KEY);
 
-    return NextResponse.json(image);
+    return NextResponse.json(submission);
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : "Unknown error";
     console.error("API error:", message);
-    return NextResponse.json({ error: "Failed to update image", details: message }, { status: 500 });
+    return NextResponse.json({ error: "Failed to update submission", details: message }, { status: 500 });
   }
 }
 
@@ -40,15 +40,15 @@ export async function DELETE(
 
     const { id } = await params;
     await dbConnect();
-    const image = await GalleryImage.findByIdAndDelete(id);
-    if (!image) return NextResponse.json({ error: "Image not found" }, { status: 404 });
+    const submission = await ContactSubmission.findByIdAndDelete(id);
+    if (!submission) return NextResponse.json({ error: "Submission not found" }, { status: 404 });
 
     await invalidateCache(CACHE_KEY);
 
-    return NextResponse.json({ message: "Image deleted" });
+    return NextResponse.json({ message: "Submission deleted" });
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : "Unknown error";
     console.error("API error:", message);
-    return NextResponse.json({ error: "Failed to delete image", details: message }, { status: 500 });
+    return NextResponse.json({ error: "Failed to delete submission", details: message }, { status: 500 });
   }
 }

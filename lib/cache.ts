@@ -71,15 +71,15 @@ export async function invalidateCacheByPrefix(prefix: string): Promise<void> {
   if (!redis) return;
 
   try {
-    let cursor = 0;
+    let cursor: string | number = 0;
     do {
-      const result = await redis.scan(cursor, { match: `${prefix}*`, count: 100 });
+      const result = await redis.scan(cursor as number, { match: `${prefix}*`, count: 100 });
       cursor = result[0];
-      const keys = result[1];
+      const keys = result[1] as string[];
       if (keys.length > 0) {
         await redis.del(...keys);
       }
-    } while (cursor !== 0);
+    } while (cursor !== 0 && cursor !== "0");
   } catch (err) {
     console.error(`Redis prefix invalidation error for "${prefix}":`, err);
   }

@@ -1,35 +1,7 @@
 import type { Metadata } from "next";
-import { Inter, Anton, Bebas_Neue, Cinzel } from "next/font/google";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
-
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const anton = Anton({
-  variable: "--font-anton",
-  weight: "400",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const bebasNeue = Bebas_Neue({
-  variable: "--font-bebas-neue",
-  weight: "400",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const cinzel = Cinzel({
-  variable: "--font-cinzel",
-  weight: ["400", "700", "900"],
-  subsets: ["latin"],
-  display: "swap",
-});
 
 import SplashScreen from "@/components/ui/SplashScreen";
 import CustomCursor from "@/components/ui/CustomCursor";
@@ -93,12 +65,16 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html
-        lang="en"
-        data-theme="dark"
-        className={`${inter.variable} ${anton.variable} ${bebasNeue.variable} ${cinzel.variable}`}
-        suppressHydrationWarning
-      >
+      <html lang="en" data-theme="dark" suppressHydrationWarning>
+        <head>
+          {/* Google Fonts loaded via CSS link — no build-time network dependency */}
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+          <link
+            href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Cinzel:wght@400;700;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+            rel="stylesheet"
+          />
+        </head>
         <body className="min-h-screen antialiased">
           <ThemeProvider>
             <CustomCursor />

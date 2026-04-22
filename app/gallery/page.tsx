@@ -94,7 +94,7 @@ export default function GalleryPage() {
                   src={image.image} 
                   alt={image.title} 
                   loading="lazy"
-                  className="w-full h-auto object-cover filter grayscale hover:grayscale-0 transition-all duration-500" 
+                  className="w-full h-auto object-cover transition-all duration-500" 
                 />
                 
                 {/* Overlay Text */}

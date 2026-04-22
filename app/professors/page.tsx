@@ -29,7 +29,7 @@ const ProfCard = ({ prof }: { prof: ProfessorData }) => {
           src={prof.image || "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=400&fit=crop"}
           alt={prof.name}
           loading="lazy"
-          className="relative z-10 w-full h-full object-cover object-top mask-image-bottom drop-shadow-[0_0_12px_rgba(255,255,255,0.2)] filter contrast-125 grayscale group-hover:grayscale-0 transition-all duration-500 ease-in-out"
+          className="relative z-10 w-full h-full object-cover object-top mask-image-bottom drop-shadow-[0_0_12px_rgba(255,255,255,0.2)] filter contrast-125 transition-all duration-500 ease-in-out"
         />
         {prof.isCurrent ? (
           <span className="absolute top-4 right-4 z-30 bg-[var(--neon-green)] text-black px-2 py-1 uppercase font-anton tracking-widest text-xs border-2 border-black shadow-[2px_2px_0_#000]">

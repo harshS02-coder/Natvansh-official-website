@@ -13,6 +13,7 @@ import {
   Images,
   GraduationCap,
   History,
+  Inbox,
 } from "lucide-react";
 
 const adminLinks = [
@@ -24,6 +25,7 @@ const adminLinks = [
   { href: "/admin/content", label: "Content", icon: FileText },
   { href: "/admin/developers", label: "Developers", icon: Code2 },
   { href: "/admin/gallery", label: "Gallery", icon: Images },
+  { href: "/admin/submissions", label: "Submissions", icon: Inbox },
 ];
 
 export default function AdminSidebar({
@@ -50,7 +52,7 @@ export default function AdminSidebar({
               Back to Site
             </Link>
             <div className="flex items-center gap-3">
-              <img src="/images/logo.png" alt="Natvansh" className="w-10 h-10 object-contain" />
+              <img src="/images/logo.webp" alt="Natvansh" className="w-10 h-10 object-contain" />
               <div>
                 <h2 className="text-xl font-anton text-white uppercase tracking-wider">Admin</h2>
                 <p className="text-[10px] font-inter font-bold uppercase tracking-widest text-zinc-600">
@@ -103,7 +105,7 @@ export default function AdminSidebar({
       <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-sm border-b-2 border-zinc-800 px-4 py-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <img src="/images/logo.png" alt="Natvansh" className="w-8 h-8 object-contain" />
+            <img src="/images/logo.webp" alt="Natvansh" className="w-8 h-8 object-contain" />
             <h2 className="text-lg font-anton text-white uppercase tracking-wider">Admin</h2>
           </div>
           <div className="flex items-center gap-2 overflow-x-auto">

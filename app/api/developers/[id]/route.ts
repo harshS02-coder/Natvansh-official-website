@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
 import dbConnect from "@/lib/mongodb";
 import Developer from "@/lib/models/Developer";
+import { invalidateCache } from "@/lib/cache";
+
+const CACHE_KEY = "developers:all";
 
 export async function PUT(
   request: NextRequest,
@@ -16,9 +19,14 @@ export async function PUT(
     const body = await request.json();
     const developer = await Developer.findByIdAndUpdate(id, body, { new: true });
     if (!developer) return NextResponse.json({ error: "Developer not found" }, { status: 404 });
+
+    await invalidateCache(CACHE_KEY);
+
     return NextResponse.json(developer);
-  } catch (error: any) { console.error("API error:", error);
-    return NextResponse.json({ error: "Failed to update developer" , details: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Unknown error";
+    console.error("API error:", message);
+    return NextResponse.json({ error: "Failed to update developer", details: message }, { status: 500 });
   }
 }
 
@@ -34,8 +42,13 @@ export async function DELETE(
     await dbConnect();
     const developer = await Developer.findByIdAndDelete(id);
     if (!developer) return NextResponse.json({ error: "Developer not found" }, { status: 404 });
+
+    await invalidateCache(CACHE_KEY);
+
     return NextResponse.json({ message: "Developer deleted" });
-  } catch (error: any) { console.error("API error:", error);
-    return NextResponse.json({ error: "Failed to delete developer" , details: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Unknown error";
+    console.error("API error:", message);
+    return NextResponse.json({ error: "Failed to delete developer", details: message }, { status: 500 });
   }
 }

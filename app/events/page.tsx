@@ -172,7 +172,7 @@ export default function EventsPage() {
                     >
                       {event.images.map((img, i) => (
                         <SwiperSlide key={i}>
-                          <div className="relative aspect-[16/10] overflow-hidden border-2 border-black bg-zinc-950 filter grayscale hover:grayscale-0 transition-all duration-500 flex items-center justify-center">
+                          <div className="relative aspect-[16/10] overflow-hidden border-2 border-black bg-zinc-950 transition-all duration-500 flex items-center justify-center">
                             <img src={img} alt={`${event.title} photo ${i + 1}`} loading="lazy" className="w-full h-full object-contain" />
                           </div>
                         </SwiperSlide>

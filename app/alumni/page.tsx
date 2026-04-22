@@ -39,7 +39,7 @@ const AlumniCard = ({ person }: { person: AlumniData }) => {
           src={person.image || fallbackImage}
           alt={person.name}
           loading="lazy"
-          className="relative z-10 w-full h-[90%] object-cover object-top mask-image-bottom drop-shadow-[0_0_12px_rgba(255,255,255,0.75)] filter contrast-125 grayscale group-hover:grayscale-0 transition-all duration-500 ease-in-out"
+          className="relative z-10 w-full h-[90%] object-cover object-top mask-image-bottom drop-shadow-[0_0_12px_rgba(255,255,255,0.75)] filter contrast-125 transition-all duration-500 ease-in-out"
           style={{ transform: transformStyle }}
         />
       </div>

@@ -30,6 +30,12 @@
   --bg-image-purple: url('/images/bg_grunge_purple.webp');
   --bg-image-dark: url('/images/bg_dark_texture.webp');
   
+  /* Font families — loaded via Google Fonts <link> in layout.tsx */
+  --font-inter: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-anton: 'Anton', Impact, Haettenschweiler, sans-serif;
+  --font-bebas-neue: 'Bebas Neue', Impact, sans-serif;
+  --font-cinzel: 'Cinzel', Georgia, 'Times New Roman', serif;
+  
   color-scheme: dark;
 }
 
@@ -40,11 +46,6 @@
   --color-neon-green: var(--neon-green);
   --color-neon-pink: var(--neon-pink);
   --color-neon-orange: var(--neon-orange);
-  
-  --font-inter: var(--font-inter);
-  --font-anton: var(--font-anton);
-  --font-bebas: var(--font-bebas-neue);
-  --font-cinzel: var(--font-cinzel);
 }
 
 /* --- Global Base --- */

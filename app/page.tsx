@@ -5,6 +5,7 @@ import HeroSection from "@/components/sections/HeroSection";
 import ClubIntroSection from "@/components/sections/ClubIntroSection";
 import ProfessorSection from "@/components/sections/ProfessorSection";
 import RecentEventsSection from "@/components/sections/RecentEventsSection";
+import JoinUsSection from "@/components/sections/JoinUsSection";
 
 export default function HomePage() {
   return (
@@ -16,6 +17,7 @@ export default function HomePage() {
         <ClubIntroSection />
         <ProfessorSection />
         <RecentEventsSection />
+        <JoinUsSection />
       </main>
       <Footer />
     </>

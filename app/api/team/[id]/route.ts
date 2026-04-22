@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
 import dbConnect from "@/lib/mongodb";
 import TeamMember from "@/lib/models/TeamMember";
+import { invalidateCache } from "@/lib/cache";
+
+const CACHE_KEY = "team:all";
 
 export async function GET(
   request: NextRequest,
@@ -10,11 +13,13 @@ export async function GET(
   try {
     const { id } = await params;
     await dbConnect();
-    const member = await TeamMember.findById(id);
+    const member = await TeamMember.findById(id).lean();
     if (!member) return NextResponse.json({ error: "Member not found" }, { status: 404 });
     return NextResponse.json(member);
-  } catch (error: any) { console.error("API error:", error);
-    return NextResponse.json({ error: "Failed to fetch member" , details: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Unknown error";
+    console.error("API error:", message);
+    return NextResponse.json({ error: "Failed to fetch member", details: message }, { status: 500 });
   }
 }
 
@@ -31,9 +36,14 @@ export async function PUT(
     const body = await request.json();
     const member = await TeamMember.findByIdAndUpdate(id, body, { new: true });
     if (!member) return NextResponse.json({ error: "Member not found" }, { status: 404 });
+
+    await invalidateCache(CACHE_KEY);
+
     return NextResponse.json(member);
-  } catch (error: any) { console.error("API error:", error);
-    return NextResponse.json({ error: "Failed to update member" , details: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Unknown error";
+    console.error("API error:", message);
+    return NextResponse.json({ error: "Failed to update member", details: message }, { status: 500 });
   }
 }
 
@@ -49,8 +59,13 @@ export async function DELETE(
     await dbConnect();
     const member = await TeamMember.findByIdAndDelete(id);
     if (!member) return NextResponse.json({ error: "Member not found" }, { status: 404 });
+
+    await invalidateCache(CACHE_KEY);
+
     return NextResponse.json({ message: "Member deleted" });
-  } catch (error: any) { console.error("API error:", error);
-    return NextResponse.json({ error: "Failed to delete member" , details: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Unknown error";
+    console.error("API error:", message);
+    return NextResponse.json({ error: "Failed to delete member", details: message }, { status: 500 });
   }
 }

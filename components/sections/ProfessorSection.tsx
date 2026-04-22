@@ -144,7 +144,7 @@ export default function ProfessorSection() {
                       alt={prof.name}
                       width={112}
                       height={112}
-                      className="relative z-10 w-full h-full object-cover border-2 sm:border-3 border-black shadow-[3px_3px_0_#000] filter grayscale hover:grayscale-0 transition-all duration-500"
+                      className="relative z-10 w-full h-full object-cover border-2 sm:border-3 border-black shadow-[3px_3px_0_#000] transition-all duration-500"
                     />
                     <div className={`absolute top-[-6px] ${i % 2 === 0 ? 'right-[-6px]' : 'left-[-6px]'} w-8 h-3 ${i % 2 === 0 ? "bg-[var(--neon-yellow)]" : "bg-[var(--neon-green)]"} border-2 border-black rotate-12 z-20`}></div>
                   </div>
