@@ -79,7 +79,7 @@ export default function HeroSection() {
   return (
     <section
       ref={container}
-      className="relative min-h-[100dvh] w-full flex flex-col items-center justify-center overflow-hidden bg-zinc-950 bg-[url('/images/home_bg_1.webp')] bg-cover bg-center"
+      className="relative min-h-[100dvh] w-full flex flex-col items-center justify-center overflow-hidden bg-zinc-950 bg-[url('/images/home_bg_mobile.webp')] sm:bg-[url('/images/home_bg_1.webp')] bg-cover bg-center"
     >
       {/* Overlays for depth */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/70 pointer-events-none z-[1]"></div>
@@ -88,13 +88,13 @@ export default function HeroSection() {
 
 
       {/* Main Content */}
-      <div className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 flex flex-col items-center py-24 sm:py-28 md:py-32">
+      <div className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 flex flex-col items-center py-20 sm:py-28 md:py-32">
 
         {/* Notice Banner */}
         {notice && (
-          <div className="hero-notice w-full max-w-2xl mb-6 sm:mb-8 bg-[var(--neon-yellow)] border-3 border-black p-2 sm:p-2.5 shadow-[5px_5px_0_#000] transform -rotate-1 flex items-center justify-center text-center gap-2">
-            <Megaphone size={16} className="text-black shrink-0 animate-pulse" />
-            <span className="font-anton text-xs sm:text-sm md:text-base text-black uppercase tracking-widest">
+          <div className="hero-notice w-full max-w-[90%] sm:max-w-2xl mb-5 sm:mb-8 bg-[var(--neon-yellow)] border-3 border-black p-2 sm:p-2.5 shadow-[4px_4px_0_#000] sm:shadow-[5px_5px_0_#000] transform -rotate-1 flex items-center justify-center text-center gap-2">
+            <Megaphone size={14} className="text-black shrink-0 animate-pulse sm:w-4 sm:h-4" />
+            <span className="font-anton text-[10px] sm:text-sm md:text-base text-black uppercase tracking-widest">
               {notice}
             </span>
             <Megaphone size={16} className="text-black shrink-0 animate-pulse hidden sm:block" />
@@ -102,18 +102,18 @@ export default function HeroSection() {
         )}
 
         {/* Sanskrit Badge */}
-        <div className="hero-badge flex items-center gap-2 px-4 py-1.5 sm:px-5 sm:py-2 border-3 border-black bg-[var(--neon-cyan)] mb-6 sm:mb-8 shadow-[4px_4px_0_#000] rotate-[-2deg] hover:rotate-[2deg] transition-transform duration-300 cursor-default">
-          <Sparkles size={14} className="text-black" />
-          <span className="font-anton tracking-[0.2em] text-black uppercase text-xs sm:text-sm">
+        <div className="hero-badge flex items-center gap-1.5 sm:gap-2 px-3 py-1 sm:px-5 sm:py-2 border-2 sm:border-3 border-black bg-[var(--neon-cyan)] mb-5 sm:mb-8 shadow-[3px_3px_0_#000] sm:shadow-[4px_4px_0_#000] rotate-[-2deg] hover:rotate-[2deg] transition-transform duration-300 cursor-default">
+          <Sparkles size={12} className="text-black sm:w-3.5 sm:h-3.5" />
+          <span className="font-anton tracking-[0.15em] sm:tracking-[0.2em] text-black uppercase text-[10px] sm:text-sm">
             अस्ति कश्चित् विशेषः!
           </span>
-          <Sparkles size={14} className="text-black" />
+          <Sparkles size={12} className="text-black sm:w-3.5 sm:h-3.5" />
         </div>
 
         {/* ===== NATVANSH TITLE ===== */}
         <h1
           ref={titleRef}
-          className="flex flex-wrap justify-center items-baseline mb-2 sm:mb-4 relative z-10"
+          className="flex flex-nowrap justify-center items-baseline mb-2 sm:mb-4 relative z-10 w-full"
           style={{ transform: "rotate(-1.5deg)" }}
         >
           {LETTERS.map((letter, i) => (
@@ -121,16 +121,16 @@ export default function HeroSection() {
               key={i}
               className="hero-char inline-block font-anton leading-none cursor-default select-none hover:scale-110 transition-transform duration-200"
               style={{
-                fontSize: "clamp(3.5rem, 18vw, 180px)",
+                fontSize: "clamp(2.5rem, 11vw, 180px)",
                 color: letter.color,
-                WebkitTextStroke: "3px #000",
+                WebkitTextStroke: "min(3px, 0.5vw) #000",
                 textShadow: `
-                  6px 6px 0px #000,
-                  10px 10px 0px rgba(0,0,0,0.3)
+                  min(6px, 1.5vw) min(6px, 1.5vw) 0px #000,
+                  min(10px, 2vw) min(10px, 2vw) 0px rgba(0,0,0,0.3)
                 `,
                 transform: `rotate(${letter.rotate}deg) translateY(${letter.y}px)`,
                 zIndex: 20 - i,
-                marginLeft: i === 0 ? "0" : "-0.02em",
+                marginLeft: i === 0 ? "0" : "-0.04em",
               }}
             >
               {letter.char}
@@ -140,9 +140,9 @@ export default function HeroSection() {
 
         {/* Subtitle Tag */}
         <div
-          className="hero-subtitle-tag bg-black px-5 py-1.5 sm:px-8 sm:py-2 border-3 border-black mb-5 sm:mb-7 shadow-[4px_4px_0_var(--neon-pink)] rotate-[1.5deg] hover:rotate-0 transition-transform duration-300"
+          className="hero-subtitle-tag bg-black px-4 py-1.5 sm:px-8 sm:py-2 border-2 sm:border-3 border-black mb-5 sm:mb-7 shadow-[3px_3px_0_var(--neon-pink)] sm:shadow-[4px_4px_0_var(--neon-pink)] rotate-[1.5deg] hover:rotate-0 transition-transform duration-300"
         >
-          <span className="font-anton text-[var(--neon-yellow)] uppercase tracking-[0.3em] text-base sm:text-xl md:text-2xl lg:text-3xl">
+          <span className="font-anton text-[var(--neon-yellow)] uppercase tracking-[0.2em] sm:tracking-[0.3em] text-sm sm:text-xl md:text-2xl lg:text-3xl">
             Drama & Film Club
           </span>
         </div>
