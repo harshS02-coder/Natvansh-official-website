@@ -222,3 +222,13 @@ section:not(:first-child) {
 .admin-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.625rem 1.25rem; font-weight: 600; font-size: 0.875rem; transition: all 0.2s ease; border: 2px solid #fff; cursor: pointer; }
 .admin-btn-primary { background: var(--neon-pink); color: white; border-color: var(--neon-pink); }
 .admin-btn-ghost { background: transparent; color: var(--text-secondary); border-color: #333; }
+
+/* --- Page Loader Animation --- */
+@keyframes loading-bar {
+  0% { transform: translateX(-100%); }
+  50% { transform: translateX(0%); }
+  100% { transform: translateX(100%); }
+}
+.animate-loading-bar {
+  animation: loading-bar 1.5s ease-in-out infinite;
+}

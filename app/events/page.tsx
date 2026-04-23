@@ -13,6 +13,7 @@ import { Calendar, MapPin } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { EffectCoverflow, Pagination, Autoplay } from "swiper/modules";
 import Image from "next/image";
+import PageLoader from "@/components/ui/PageLoader";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
@@ -64,7 +65,8 @@ const placeholderEvents: EventItem[] = [
 
 export default function EventsPage() {
   const container = useRef<HTMLDivElement>(null);
-  const [events, setEvents] = useState<EventItem[]>(placeholderEvents);
+  const [events, setEvents] = useState<EventItem[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchEvents() {
@@ -72,10 +74,12 @@ export default function EventsPage() {
         const res = await fetch("/api/events");
         if (res.ok) {
           const data = await res.json();
-          if (data.length > 0) setEvents(data);
+          setEvents(data);
         }
       } catch (e) {
         console.error("Failed to fetch events:", e);
+      } finally {
+        setLoading(false);
       }
     }
     fetchEvents();
@@ -107,8 +111,10 @@ export default function EventsPage() {
         });
       });
     },
-    { scope: container }
+    { scope: container, dependencies: [loading] }
   );
+
+  if (loading) return <PageLoader />;
 
   return (
     <>

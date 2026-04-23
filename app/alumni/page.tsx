@@ -7,6 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
 import ScrollProgress from "@/components/ui/ScrollProgress";
+import PageLoader from "@/components/ui/PageLoader";
 import { IconInstagram, IconLinkedin, IconWhatsapp } from "@/components/ui/SocialIcons";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -73,6 +74,7 @@ const AlumniCard = ({ person }: { person: AlumniData }) => {
 export default function AlumniPage() {
   const container = useRef<HTMLDivElement>(null);
   const [alumni, setAlumni] = useState<AlumniData[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchAlumni() {
@@ -84,6 +86,8 @@ export default function AlumniPage() {
         }
       } catch (e) {
         console.error("Failed to fetch alumni:", e);
+      } finally {
+        setLoading(false);
       }
     }
     fetchAlumni();
@@ -103,7 +107,7 @@ export default function AlumniPage() {
         ease: "power3.out",
       });
     },
-    { scope: container }
+    { scope: container, dependencies: [loading] }
   );
 
   // Group by batch
@@ -114,6 +118,8 @@ export default function AlumniPage() {
   }, {} as Record<string, AlumniData[]>);
 
   const batches = Object.keys(groupedAlumni).sort((a, b) => parseInt(b) - parseInt(a));
+
+  if (loading) return <PageLoader />;
 
   return (
     <>

@@ -7,6 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
 import ScrollProgress from "@/components/ui/ScrollProgress";
+import PageLoader from "@/components/ui/PageLoader";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -29,7 +30,8 @@ const placeholderImages: GalleryItem[] = [
 
 export default function GalleryPage() {
   const container = useRef<HTMLDivElement>(null);
-  const [images, setImages] = useState<GalleryItem[]>(placeholderImages);
+  const [images, setImages] = useState<GalleryItem[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchGallery() {
@@ -37,10 +39,12 @@ export default function GalleryPage() {
         const res = await fetch("/api/gallery");
         if (res.ok) {
           const data = await res.json();
-          if (data.length > 0) setImages(data);
+          setImages(data);
         }
       } catch (e) {
         console.error("Failed to fetch gallery:", e);
+      } finally {
+        setLoading(false);
       }
     }
     fetchGallery();
@@ -61,8 +65,10 @@ export default function GalleryPage() {
         ease: "power3.out",
       });
     },
-    { scope: container }
+    { scope: container, dependencies: [loading] }
   );
+
+  if (loading) return <PageLoader />;
 
   return (
     <>

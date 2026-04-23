@@ -7,6 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
 import ScrollProgress from "@/components/ui/ScrollProgress";
+import PageLoader from "@/components/ui/PageLoader";
 import { IconInstagram, IconLinkedin, IconWhatsapp } from "@/components/ui/SocialIcons";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -24,23 +25,6 @@ interface TeamMember {
   year: string;
   order: number;
 }
-
-const placeholderPostBearers: TeamMember[] = [
-  { name: "Rahul Sharma", role: "President", position: "Post Bearer", image: fallbackImage, socialLinks: {}, year: "2025", order: 1 },
-  { name: "Priya Singh", role: "Vice President", position: "Post Bearer", image: fallbackImage, socialLinks: {}, year: "2025", order: 2 },
-  { name: "Arjun Patel", role: "General Secretary", position: "Post Bearer", image: fallbackImage, socialLinks: {}, year: "2025", order: 3 },
-  { name: "Sneha Gupta", role: "Cultural Secretary", position: "Post Bearer", image: fallbackImage, socialLinks: {}, year: "2025", order: 4 },
-];
-
-const placeholderCreative: TeamMember[] = [
-  { name: "Ananya Roy", role: "Head of Direction", position: "Creative", image: fallbackImage, socialLinks: {}, year: "2025", order: 1 },
-  { name: "Vikram Das", role: "Head of Scripting", position: "Creative", image: fallbackImage, socialLinks: {}, year: "2025", order: 2 },
-];
-
-const placeholderTechnical: TeamMember[] = [
-  { name: "Amit Kumar", role: "Head of Cinematography", position: "Technical", image: fallbackImage, socialLinks: {}, year: "2025", order: 1 },
-  { name: "Riya Verma", role: "Head of Editing", position: "Technical", image: fallbackImage, socialLinks: {}, year: "2025", order: 2 },
-];
 
 // Card component
 const TeamCard = ({ person }: { person: TeamMember }) => {
@@ -94,10 +78,10 @@ const TeamCard = ({ person }: { person: TeamMember }) => {
 
 export default function TeamPage() {
   const container = useRef<HTMLDivElement>(null);
-  const [postBearers, setPostBearers] = useState<TeamMember[]>(placeholderPostBearers);
-  const [creativeTeam, setCreativeTeam] = useState<TeamMember[]>(placeholderCreative);
-  const [technicalTeam, setTechnicalTeam] = useState<TeamMember[]>(placeholderTechnical);
+  const [postBearers, setPostBearers] = useState<TeamMember[]>([]);
+  const [creativeTeam, setCreativeTeam] = useState<TeamMember[]>([]);
   const [managementTeam, setManagementTeam] = useState<TeamMember[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchTeam() {
@@ -108,16 +92,16 @@ export default function TeamPage() {
           if (data.length > 0) {
             const pb = data.filter(m => m.position === "Post Bearer").sort((a, b) => a.order - b.order);
             const cr = data.filter(m => m.position === "Creative").sort((a, b) => a.order - b.order);
-            const tc = data.filter(m => m.position === "Technical").sort((a, b) => a.order - b.order);
             const mg = data.filter(m => m.position === "Management").sort((a, b) => a.order - b.order);
-            if (pb.length > 0) setPostBearers(pb);
-            if (cr.length > 0) setCreativeTeam(cr);
-            if (tc.length > 0) setTechnicalTeam(tc);
-            if (mg.length > 0) setManagementTeam(mg);
+            setPostBearers(pb);
+            setCreativeTeam(cr);
+            setManagementTeam(mg);
           }
         }
       } catch (e) {
         console.error("Failed to fetch team:", e);
+      } finally {
+        setLoading(false);
       }
     }
     fetchTeam();
@@ -125,6 +109,7 @@ export default function TeamPage() {
 
   useGSAP(
     () => {
+      if (loading) return;
       gsap.from(".member-card-wrapper", {
         scrollTrigger: {
           trigger: container.current,
@@ -137,13 +122,15 @@ export default function TeamPage() {
         ease: "power3.out",
       });
     },
-    { scope: container }
+    { scope: container, dependencies: [loading] }
   );
 
   const teamSections = [
     { name: "SENIOR MEMBERS", members: creativeTeam, bg: "bg-[url('/images/bg_grunge_purple.webp')]" },
     ...(managementTeam.length > 0 ? [{ name: "JUNIOR MEMBERS", members: managementTeam, bg: "bg-[url('/images/bg_grunge_red.webp')]" }] : []),
   ];
+
+  if (loading) return <PageLoader />;
 
   return (
     <>
